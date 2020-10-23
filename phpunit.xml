@@ -1,0 +1,12 @@
+<phpunit bootstrap="bootstrap.php">
+  <testsuites>
+    <testsuite name="servicetests">
+      <file>tests/AccountServiceTests.php</file>
+      <file>tests/BankingServiceTests.php</file>
+      <file>tests/CashDepositServiceTests.php</file>
+      <file>tests/MassPaymentServiceTests.php</file>
+      <file>tests/PaymentServiceTests.php</file>
+      <file>tests/ValidationServiceTests.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>
