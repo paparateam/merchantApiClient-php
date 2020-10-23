@@ -26,10 +26,10 @@ Integrating Papara into your software requires following;
 
 2. Install client library. So your integration can interact with the Papara API. Install operations are like following.
 
-## Nuget operations
+## Composer operations
 
 ```bash
-# Install via dotnet
+# Install via composer
 composer require papara/papara
 ```
 
