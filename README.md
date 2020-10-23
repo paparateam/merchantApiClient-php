@@ -30,40 +30,12 @@ Integrating Papara into your software requires following;
 
 ```bash
 # Install via dotnet
-dotnet add package Papara.Net
-dotnet restore
-```
-or 
-
-```bash
-# Or install via NuGet
-PM> Install-Package Papara.Net
+composer require papara/papara
 ```
 
 # Configurations
 
-## Dotnet Core Setup
-
-Before connecting to API, dotnet core developers should configure client settings. Create an `appsettings.json` file on the root of your project. Proper `appsettings.json` file should look like the following; 
-
-``` json  {
-{
-  "Papara": {
-  	"ApiKey": "INSERT_YOUR_API_KEY_HERE", // Papara Registered API KEY
-  	"Env": "Test", // Target environment. Test or Live
-  }
-}
-```
-
-After you create the `appsetting.json` file, add following lines in `ConfigureServices` method on your `Startup.cs` file.
-
-```php
-services.AddPapara(o =>
-                   {
-                       o.ApiKey = Configuration["Papara:ApiKey"];
-                       o.Env = Configuration["Papara:Env"];
-                   });
-```
+## Setup
 
 Dependency injection can be used for setting up the client. API Key and Environment variable will be read from `appsettings.json` file.
 
