@@ -18,13 +18,42 @@
 
 <a href="#response-types">Response Types</a>
 
-# <a name="intro">Intro</a> 
+# <a name="intro">Intro</a>
 
 Integrating Papara into your software requires following;
 
-1. Obtain your API Key. So Papara can authenticate integration’s API requests. To obtain your API Key, follow https://merchant.test.papara.com/ URL. After sucessfully logged in, API Key can be viewed on https://merchant.test.papara.com/APIInfo 
+1. Obtain your API Key. So Papara can authenticate integration’s API requests. To obtain your API Key, follow https://merchant.test.papara.com/ URL. After sucessfully logged in, API Key can be viewed on https://merchant.test.papara.com/APIInfo
 
 2. Install client library. So your integration can interact with the Papara API. Install operations are like following.
+
+# Configuration
+
+Client can be created with class or standard way;
+
+Standard way:
+
+```php
+
+require_once('PATH_TO_PAPARA/bootstrap.php');
+
+use \Papara\PaparaClient;
+$client = new PaparaClient('YOUR_PAPARA_API_KEY', true);
+```
+
+Or object oriented way:
+
+```php
+use Papara\PaparaClient;
+
+class AccountServiceTests {
+  private PaparaClient $client;
+
+  public function __construct()
+  {
+    $this->client = new PaparaClient($this->config['ApiKey'], true);
+  }
+}
+```
 
 ## Composer operations
 
@@ -46,8 +75,6 @@ When a cash deposit request was made, following statuses will return and display
 | Cancel          | 2         | Cash Deposit is cancelled            |
 | ReadyToComplete | 3         | Cash Deposit is ready for completion |
 
- 
-
 # Currency
 
 All currencies on the API are listed below.
@@ -58,34 +85,28 @@ All currencies on the API are listed below.
 | USD     | 1         | U.S Dollar      |
 | EUR     | 2         | Euro            |
 
- 
-
 # EntryType
 
 Entry types are used in ledgers and cash deposits in order to track the money in the operation. Possible entry types are listed below.
 
-| **Key**                       | **Value** | **Description**                                              |
-| ----------------------------- | --------- | ------------------------------------------------------------ |
-| BankTransfer                  | 1         | Bank Transfer: Cash deposit or withdrawal                    |
-| CorporateCardTransaction      | 2         | Papara Corporate Card Transaction:  Transaction which was operated by corporation card assigned to merchant |
-| LoadingMoneyFromPhysicalPoint | 6         | Loading Money From Physical Point: Cash  deposit operation from contracted location |
-| MerchantPayment               | 8         | Merchant Payment: Checkout via Papara                        |
-| PaymentDistribution           | 9         | Payment Distribution: Masspayment via  papara                |
-| EduPos                        | 11        | Offline payment. EDU POS via Papara                          |
-
- 
+| **Key**                       | **Value** | **Description**                                                                                            |
+| ----------------------------- | --------- | ---------------------------------------------------------------------------------------------------------- |
+| BankTransfer                  | 1         | Bank Transfer: Cash deposit or withdrawal                                                                  |
+| CorporateCardTransaction      | 2         | Papara Corporate Card Transaction: Transaction which was operated by corporation card assigned to merchant |
+| LoadingMoneyFromPhysicalPoint | 6         | Loading Money From Physical Point: Cash deposit operation from contracted location                         |
+| MerchantPayment               | 8         | Merchant Payment: Checkout via Papara                                                                      |
+| PaymentDistribution           | 9         | Payment Distribution: Masspayment via papara                                                               |
+| EduPos                        | 11        | Offline payment. EDU POS via Papara                                                                        |
 
 # PaymentMethod
 
-Three types of payment is accepted in the system. Possible payment methods are listed below. 
+Three types of payment is accepted in the system. Possible payment methods are listed below.
 
 | **Key**       | **Value** | **Description**        |
 | ------------- | --------- | ---------------------- |
 | PaparaAccount | 0         | Papara Account Balance |
 | Card          | 1         | Registered Credit Card |
 | Mobile        | 2         | Mobile Payment         |
-
- 
 
 # PaymentStatus
 
@@ -103,7 +124,7 @@ This part contains the technical integration information prepared for the use of
 
 ## Get Account Information
 
-Returns the merchant account and balance information. Balance information contains current balance, available funds and unavailable funds, whilst account information contains brand name and full title of the merchant. To perform this operation use `GetAccount` method on `Account` service. 
+Returns the merchant account and balance information. Balance information contains current balance, available funds and unavailable funds, whilst account information contains brand name and full title of the merchant. To perform this operation use `GetAccount` method on `Account` service.
 
 ### Account Model
 
@@ -118,11 +139,11 @@ Returns the merchant account and balance information. Balance information contai
 
 ### AllowedPaymentType
 
- `AllowedPaymentType` displays allowed payment types.
+`AllowedPaymentType` displays allowed payment types.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| PaymentMethod     | int      | Returns payment method.<br />0 - Papara Account Balance  <br />1 - Credit/Debit Card <br />2 - Mobile - Mobile Payment. |
+| **Variable Name** | **Type** | **Description**                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| PaymentMethod     | int      | Returns payment method.<br />0 - Papara Account Balance <br />1 - Credit/Debit Card <br />2 - Mobile - Mobile Payment. |
 
 ### AccountBalance
 
@@ -147,7 +168,7 @@ Return account information and current balance for authorized merchant.
 
 #### Usage
 
-``` php
+```php
   /**
    * Returns account information and current balance for authorized merchant.
    *
@@ -160,31 +181,29 @@ Return account information and current balance for authorized merchant.
   }
 ```
 
-
-
 ## List Ledgers
 
-Returns the merchant account history (list of transactions) in paged format. This method is used for listing all transactions made for a merchant including resulting balance for each transaction.  To perform this operation use `ListLedgers` method on `Account` service. `startDate` and `endDate` should be provided.
+Returns the merchant account history (list of transactions) in paged format. This method is used for listing all transactions made for a merchant including resulting balance for each transaction. To perform this operation use `ListLedgers` method on `Account` service. `startDate` and `endDate` should be provided.
 
 ### AccountLedger
 
 `AccountLedger` represents a transaction itself that returns from API.
 
-| **Variable Name**   | **Type**     | **Description**                                              |
-| ------------------- | ------------ | ------------------------------------------------------------ |
-| ID                  | int          | Returns merchant ID                                          |
-| CreatedAt           | DateTime     | Returns created date of a ledger                             |
-| EntryType           | EntryType    | Returns entry type                                           |
-| EntryTypeName       | string       | Returns entry type name                                      |
-| Amount              | float        | Returns amount                                               |
-| Fee                 | float        | Returns fee                                                  |
-| Currency            | int          | Returns currency                                             |
-| CurrencyInfo        | CurrencyInfo | Returns currency information                                 |
-| ResultingBalance    | float        | Returns resulting balance                                    |
-| Description         | string       | Returns description                                          |
-| MassPaymentId       | string       | Returns mass payment Id. It is the  unique value sent by the merchant to prevent duplicate repetition in payment  transactions. It is displayed in transaction records of masspayment type in  account transactions to ensure control of the transaction. It will be null in  other payment types. |
-| CheckoutPaymentId   | string       | Returns checkout payment ID. It is  the ID field in the data object in the payment record transaction. It is the  unique identifier of the payment transaction. It is displayed in transaction  records of checkout type in account transactions. It will be null in other  payment types. |
-| CheckoutReferenceID | string       | Returns checkout reference ID. This  is the referenceId field sent when creating the payment transaction record.  It is the reference information of the payment transaction in the merchant  system. It is displayed in transaction records of checkout type in account  transactions. It will be null in other payment types |
+| **Variable Name**   | **Type**     | **Description**                                                                                                                                                                                                                                                                                                            |
+| ------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                  | int          | Returns merchant ID                                                                                                                                                                                                                                                                                                        |
+| CreatedAt           | DateTime     | Returns created date of a ledger                                                                                                                                                                                                                                                                                           |
+| EntryType           | EntryType    | Returns entry type                                                                                                                                                                                                                                                                                                         |
+| EntryTypeName       | string       | Returns entry type name                                                                                                                                                                                                                                                                                                    |
+| Amount              | float        | Returns amount                                                                                                                                                                                                                                                                                                             |
+| Fee                 | float        | Returns fee                                                                                                                                                                                                                                                                                                                |
+| Currency            | int          | Returns currency                                                                                                                                                                                                                                                                                                           |
+| CurrencyInfo        | CurrencyInfo | Returns currency information                                                                                                                                                                                                                                                                                               |
+| ResultingBalance    | float        | Returns resulting balance                                                                                                                                                                                                                                                                                                  |
+| Description         | string       | Returns description                                                                                                                                                                                                                                                                                                        |
+| MassPaymentId       | string       | Returns mass payment Id. It is the unique value sent by the merchant to prevent duplicate repetition in payment transactions. It is displayed in transaction records of masspayment type in account transactions to ensure control of the transaction. It will be null in other payment types.                             |
+| CheckoutPaymentId   | string       | Returns checkout payment ID. It is the ID field in the data object in the payment record transaction. It is the unique identifier of the payment transaction. It is displayed in transaction records of checkout type in account transactions. It will be null in other payment types.                                     |
+| CheckoutReferenceID | string       | Returns checkout reference ID. This is the referenceId field sent when creating the payment transaction record. It is the reference information of the payment transaction in the merchant system. It is displayed in transaction records of checkout type in account transactions. It will be null in other payment types |
 
 ### CurrencyInfo
 
@@ -203,16 +222,16 @@ Returns the merchant account history (list of transactions) in paged format. Thi
 
 ### LedgerListOptions Model
 
-`LedgerListOptions`  is used by account service for providing request parameters for ledger listing operation. 
+`LedgerListOptions` is used by account service for providing request parameters for ledger listing operation.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| startDate         | DateTime | Gets or sets start date for transactions                     |
-| endDate           | DateTime | Gets or sets end date for transactions                       |
-| entryType         | enum     | Gets or sets entry types                                     |
-| accountNumber     | int      | Gets or sets merchant account number                         |
-| page              | int      | Gets or sets the requested page number. If  the requested date has more than 1 page of results for the requested  PageSize, use this to iterate through pages |
-| pageSize          | int      | Gets or sets number of elements you want  to receive per request page. Min=1, Max=50 |
+| **Variable Name** | **Type** | **Description**                                                                                                                                             |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| startDate         | DateTime | Gets or sets start date for transactions                                                                                                                    |
+| endDate           | DateTime | Gets or sets end date for transactions                                                                                                                      |
+| entryType         | enum     | Gets or sets entry types                                                                                                                                    |
+| accountNumber     | int      | Gets or sets merchant account number                                                                                                                        |
+| page              | int      | Gets or sets the requested page number. If the requested date has more than 1 page of results for the requested PageSize, use this to iterate through pages |
+| pageSize          | int      | Gets or sets number of elements you want to receive per request page. Min=1, Max=50                                                                         |
 
 ### Service Method
 
@@ -226,7 +245,7 @@ Returns list of ledgers for authorized merchant.
 
 #### Usage
 
-``` php
+```php
   /**
    * Returns list of ledgers for authorized merchant.
    *
@@ -281,10 +300,10 @@ Returns settlement for authorized merchant.
 
 #### Usage
 
-``` php
+```php
   /**
    * Returns settlement for authorized merchant.
-   * 
+   *
    * @param SettlementGetOptions $options
    * @return PaparaResult
    */
@@ -299,9 +318,7 @@ Returns settlement for authorized merchant.
   }
 ```
 
-
-
-# <a name="banking">Banking</a> 
+# <a name="banking">Banking</a>
 
 This part contains technical integration information prepared for merchants those who want to quickly and securely list their bank accounts with Papara and/or create a withdrawal request to their bank accounts.
 
@@ -335,7 +352,7 @@ Returns bank accounts for authorized merchant.
 
 #### Usage
 
-``` php 
+```php
   /**
    * Returns bank accounts for authorized merchant.
    *
@@ -352,14 +369,14 @@ Returns bank accounts for authorized merchant.
 
 Generates withdrawal requests for merchants. To perform this operation use `Withdrawal` method on `Banking` service.
 
-### BankingWithdrawalOptions 
+### BankingWithdrawalOptions
 
 `BankingWithdrawalOptions` is used by banking service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| bankAccountId     | int?     | Gets or sets target bank account id which  money will be transferred to when withdrawal is completed.It will be obtained  as a result of the request to list bank accounts. |
-| amount            | float    | Gets or sets withdrawal amount                               |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                           |
+| ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| bankAccountId     | int?     | Gets or sets target bank account id which money will be transferred to when withdrawal is completed.It will be obtained as a result of the request to list bank accounts. |
+| amount            | float    | Gets or sets withdrawal amount                                                                                                                                            |
 
 ### Service Method
 
@@ -373,7 +390,7 @@ Creates a withdrawal request from given bank account for authorized merchant.
 
 #### Usage
 
-``` php
+```php
   /**
    * Creates a withdrawal request from given bank account for authorized merchant.
    *
@@ -383,7 +400,7 @@ Creates a withdrawal request from given bank account for authorized merchant.
   public function Withdrawal()
   {
     $bankAccountResult = $this->client->BankingService->GetBankAccounts();
-    
+
     $bankAccount = $bankAccountResult->data[0];
 
     $options = new BankingWithdrawalOptions;
@@ -397,16 +414,14 @@ Creates a withdrawal request from given bank account for authorized merchant.
 
 ## Possible Errors and Error Codes
 
-| **Error Code** | **Error Description**                          |
-| -------------- | ---------------------------------------------- |
-| 105            | Insufficient funds.                            |
-| 115            | Requested amount is lower then  minimum limit. |
-| 120            | Bank account not found.                        |
-| 247            | Merchant's account is not active.              |
+| **Error Code** | **Error Description**                         |
+| -------------- | --------------------------------------------- |
+| 105            | Insufficient funds.                           |
+| 115            | Requested amount is lower then minimum limit. |
+| 120            | Bank account not found.                       |
+| 247            | Merchant's account is not active.             |
 
-
-
-# <a name="cash-deposit">Cash Deposit</a> 
+# <a name="cash-deposit">Cash Deposit</a>
 
 With the integration of Papara physical point, you can become a money loading point and earn money from which end users can load balance to their Papara accounts. Physical point integration methods should only be used in scenarios where users load cash to Papara accounts.
 
@@ -418,16 +433,16 @@ Returns cash deposit information. To perform this operation use `getCashDeposit`
 
 `CashDeposit` is used by cash deposit service to match returning cash deposit values from API
 
-| **Variable Name** | **Type**  | **Description**                                  |
-| ----------------- | --------- | ------------------------------------------------ |
-| MerchantReference | string    | Returns merchant reference code                  |
-| Id                | int?      | Returns cash deposit ID                          |
-| CreatedAt         | DateTime? | Returns created date of cash deposit             |
-| Amount            | float     | Returns amount of cash deposit                   |
-| Currency          | int?      | Returns currency of cash deposit                 |
-| Fee               | float     | Returns fee of cash deposit                      |
-| ResultingBalance  | float     | Returns resulting balance in  merchant's account |
-| Description       | string    | Returns description                              |
+| **Variable Name** | **Type**  | **Description**                                 |
+| ----------------- | --------- | ----------------------------------------------- |
+| MerchantReference | string    | Returns merchant reference code                 |
+| Id                | int?      | Returns cash deposit ID                         |
+| CreatedAt         | DateTime? | Returns created date of cash deposit            |
+| Amount            | float     | Returns amount of cash deposit                  |
+| Currency          | int?      | Returns currency of cash deposit                |
+| Fee               | float     | Returns fee of cash deposit                     |
+| ResultingBalance  | float     | Returns resulting balance in merchant's account |
+| Description       | string    | Returns description                             |
 
 ### CashDepositGetOptions
 
@@ -447,9 +462,9 @@ Returns a cash deposit information
 | -------------- | --------------------- | ------------------------- |
 | getCashDeposit | CashDepositGetOptions | PaparaResult<CashDeposit> |
 
-####   Usage
+#### Usage
 
-``` php
+```php
   /**
    * Returns a cash deposit information.
    *
@@ -474,9 +489,9 @@ Returns the information of the money loading process from the physical point wit
 
 `CashDepositByReferenceOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| reference         | string   | Gets or sets cash deposit reference no.  Reference no is required. |
+| **Variable Name** | **Type** | **Description**                                                   |
+| ----------------- | -------- | ----------------------------------------------------------------- |
+| reference         | string   | Gets or sets cash deposit reference no. Reference no is required. |
 
 ### Service Method
 
@@ -490,7 +505,7 @@ Returns a cash deposit object using merchant's unique reference number.
 
 #### Usage
 
-``` php
+```php
   /**
    * Returns a cash deposit object using merchant's unique reference number.
    *
@@ -515,11 +530,11 @@ It deposits money to the user from the physical point. using user’s phone numb
 
 `CashDepositToPhoneOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| phoneNumber       | string   | Gets or sets phone number. The mobile  phone number registered in the Papara account of the user to be loaded with  cash. |
-| amount            | float    | Gets or sets amount. The amount of the  cash deposit. This amount will be transferred to the account of the user who  received the payment. The amount to be deducted from the merchant account  will be exactly this number. |
-| merchantReference | string   | Gets or sets merchant reference. The  unique value sent by the merchant to prevent false repetitions in cash  loading transactions. If a previously submitted and successful  merchantReference is resubmitted with a new request, the request will fail.  MerchantReference sent with failed requests can be resubmitted. |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| phoneNumber       | string   | Gets or sets phone number. The mobile phone number registered in the Papara account of the user to be loaded with cash.                                                                                                                                                                                                |
+| amount            | float    | Gets or sets amount. The amount of the cash deposit. This amount will be transferred to the account of the user who received the payment. The amount to be deducted from the merchant account will be exactly this number.                                                                                             |
+| merchantReference | string   | Gets or sets merchant reference. The unique value sent by the merchant to prevent false repetitions in cash loading transactions. If a previously submitted and successful merchantReference is resubmitted with a new request, the request will fail. MerchantReference sent with failed requests can be resubmitted. |
 
 ### Service Method
 
@@ -533,7 +548,7 @@ Creates a cash deposit request using end users's phone number.
 
 #### Usage
 
-``` php
+```php
   /**
    * Creates a cash deposit request using end users's phone number.
    *
@@ -560,11 +575,11 @@ Deposits money to the user with Papara number from the physical point. To perfor
 
 `CashDepositToAccountNumberOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| accountNumber     | int      | Gets or sets account number. Papara  account number of the user who will be loaded with cash. |
-| amount            | float    | Gets or sets amount. The amount of the  cash deposit. This amount will be transferred to the account of the user who  received the payment. The amount to be deducted from the merchant account  will be exactly this number. |
-| merchantReference | string   | Gets or sets merchant reference. The  unique value sent by the merchant to prevent false repetitions in cash  loading transactions. If a previously submitted and successful  merchantReference is resubmitted with a new request, the request will fail.  MerchantReference sent with failed requests can be resubmitted. |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| accountNumber     | int      | Gets or sets account number. Papara account number of the user who will be loaded with cash.                                                                                                                                                                                                                           |
+| amount            | float    | Gets or sets amount. The amount of the cash deposit. This amount will be transferred to the account of the user who received the payment. The amount to be deducted from the merchant account will be exactly this number.                                                                                             |
+| merchantReference | string   | Gets or sets merchant reference. The unique value sent by the merchant to prevent false repetitions in cash loading transactions. If a previously submitted and successful merchantReference is resubmitted with a new request, the request will fail. MerchantReference sent with failed requests can be resubmitted. |
 
 ### Service Method
 
@@ -577,7 +592,6 @@ Creates a cash deposit request using end user's account number.
 | createWithAccountNumber | CashDepositToAccountNumberOptions | PaparaResult<CashDeposit> |
 
 #### Usage
-
 
 ```php
   /**
@@ -600,17 +614,17 @@ Creates a cash deposit request using end user's account number.
 
 ## Create Cash Deposit With National Identity Number
 
-Deposits money to the user with national identity number registered in Papara from the physical point. To perform this operation use `createWithTckn` on `Cash Deposit` service.  `tckn`, `amount` and `merchantReference` should be provided.
+Deposits money to the user with national identity number registered in Papara from the physical point. To perform this operation use `createWithTckn` on `Cash Deposit` service. `tckn`, `amount` and `merchantReference` should be provided.
 
 ### CashDepositToTcknOptions
 
 `CashDepositToTcknOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| tckn              | long     | Gets or sets national identity number  which is linked to user's Papara account |
-| amount            | float    | Gets or sets amount. The amount of the  cash deposit. This amount will be transferred to the account of the user who  received the payment. The amount to be deducted from the merchant account  will be exactly this number |
-| merchantReference | string   | Gets or sets merchant reference. The  unique value sent by the merchant to prevent false repetitions in cash  loading transactions. If a previously submitted and successful  merchantReference is resubmitted with a new request, the request will fail.  MerchantReference sent with failed requests can be resubmitted |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                       |
+| ----------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tckn              | long     | Gets or sets national identity number which is linked to user's Papara account                                                                                                                                                                                                                                        |
+| amount            | float    | Gets or sets amount. The amount of the cash deposit. This amount will be transferred to the account of the user who received the payment. The amount to be deducted from the merchant account will be exactly this number                                                                                             |
+| merchantReference | string   | Gets or sets merchant reference. The unique value sent by the merchant to prevent false repetitions in cash loading transactions. If a previously submitted and successful merchantReference is resubmitted with a new request, the request will fail. MerchantReference sent with failed requests can be resubmitted |
 
 ### Service Method
 
@@ -662,14 +676,14 @@ Creates a request to deposit money from the physical point using national identi
 
 ### CashDepositTcknControlOptions
 
-`CashDepositTcknControlOptions` is used by cash deposit service for providing request parameters. 
+`CashDepositTcknControlOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| phoneNumber       | string   | Gets or sets user's phone number. The  phone number of the user to be sent money, including the country code and  "+". |
-| tckn              | int      | Gets or sets national identity number  which is linked to user's Papara account |
-| amount            | float    | Gets or sets amount. The amount of the  cash deposit. This amount will be transferred to the account of the user who  received the payment. The amount to be deducted from the merchant account  will be exactly this number. |
-| merchantReference | string   | Gets or sets merchant reference. The  unique value sent by the merchant to prevent false repetitions in cash loading  transactions. If a previously submitted and successful merchantReference is  resubmitted with a new request, the request will fail. MerchantReference sent  with failed requests can be resubmitted. |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| phoneNumber       | string   | Gets or sets user's phone number. The phone number of the user to be sent money, including the country code and "+".                                                                                                                                                                                                   |
+| tckn              | int      | Gets or sets national identity number which is linked to user's Papara account                                                                                                                                                                                                                                         |
+| amount            | float    | Gets or sets amount. The amount of the cash deposit. This amount will be transferred to the account of the user who received the payment. The amount to be deducted from the merchant account will be exactly this number.                                                                                             |
+| merchantReference | string   | Gets or sets merchant reference. The unique value sent by the merchant to prevent false repetitions in cash loading transactions. If a previously submitted and successful merchantReference is resubmitted with a new request, the request will fail. MerchantReference sent with failed requests can be resubmitted. |
 
 ### Service Method
 
@@ -722,14 +736,14 @@ Creates a request to deposit money from the physical point using national identi
 
 ### CashDepositTcknControlOptions
 
-`CashDepositTcknControlOptions` is used by cash deposit service for providing request parameters. 
+`CashDepositTcknControlOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| phoneNumber       | string   | Gets or sets user's phone number. The  phone number of the user to be sent money, including the country code and  "+". |
-| tckn              | int      | Gets or sets national identity number  which is linked to user's Papara account |
-| amount            | float    | Gets or sets amount. The amount of the  cash deposit. This amount will be transferred to the account of the user who  received the payment. The amount to be deducted from the merchant account  will be exactly this number. |
-| merchantReference | string   | Gets or sets merchant reference. The  unique value sent by the merchant to prevent false repetitions in cash loading  transactions. If a previously submitted and successful merchantReference is  resubmitted with a new request, the request will fail. MerchantReference sent  with failed requests can be resubmitted. |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| phoneNumber       | string   | Gets or sets user's phone number. The phone number of the user to be sent money, including the country code and "+".                                                                                                                                                                                                   |
+| tckn              | int      | Gets or sets national identity number which is linked to user's Papara account                                                                                                                                                                                                                                         |
+| amount            | float    | Gets or sets amount. The amount of the cash deposit. This amount will be transferred to the account of the user who received the payment. The amount to be deducted from the merchant account will be exactly this number.                                                                                             |
+| merchantReference | string   | Gets or sets merchant reference. The unique value sent by the merchant to prevent false repetitions in cash loading transactions. If a previously submitted and successful merchantReference is resubmitted with a new request, the request will fail. MerchantReference sent with failed requests can be resubmitted. |
 
 ### Service Method
 
@@ -842,7 +856,7 @@ With the reference code created by the user, it checks the deposit request witho
 
 #### Purpose
 
-Makes  a cash deposit request ready to be completed without upfront payment.
+Makes a cash deposit request ready to be completed without upfront payment.
 
 | **Method**                  | **Params**                | **Return Type**                    |
 | --------------------------- | ------------------------- | ---------------------------------- |
@@ -898,13 +912,11 @@ Completes a cash deposit request without upfront payment.
     $options->amount = 10;
     $options->referenceCode = $result->data->merchantReference;
 
-    $cashdeposit = $this->client->CashDepositService->completeProvisionByReference($options); 
+    $cashdeposit = $this->client->CashDepositService->completeProvisionByReference($options);
 
     return $result;
   }
 ```
-
-
 
 ## Cash Deposit Completion
 
@@ -914,10 +926,10 @@ Confirms the deposit request created from the physical point to the user without
 
 `CashDepositCompleteOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                |
-| ----------------- | -------- | ---------------------------------------------- |
-| id                | int      | Gets or sets ID of cash deposit request        |
-| transactionDate   | DateTime | Gets or sets date of cash deposit  transaction |
+| **Variable Name** | **Type** | **Description**                               |
+| ----------------- | -------- | --------------------------------------------- |
+| id                | int      | Gets or sets ID of cash deposit request       |
+| transactionDate   | DateTime | Gets or sets date of cash deposit transaction |
 
 ### Service Method
 
@@ -957,12 +969,12 @@ Retrieves information of money deposits from the physical point. To perform this
 
 `CashDepositByDateOptions` is used by cash deposit service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| startDate         | DateTime | Gets or sets start date of cash deposit                      |
-| endDate           | DateTime | Gets or sets end date of cash deposit                        |
-| pageIndex         | int      | Gets or sets page index. It is the index  number of the page that is wanted to display from the pages calculated on the  basis of the number of records (pageItemCount) desired to be displayed on a  page. Note: the first page is always 1 |
-| pageItemCount     | int      | Gets or sets page item count. The number  of records that are desired to be displayed on a page |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                           |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| startDate         | DateTime | Gets or sets start date of cash deposit                                                                                                                                                                                                   |
+| endDate           | DateTime | Gets or sets end date of cash deposit                                                                                                                                                                                                     |
+| pageIndex         | int      | Gets or sets page index. It is the index number of the page that is wanted to display from the pages calculated on the basis of the number of records (pageItemCount) desired to be displayed on a page. Note: the first page is always 1 |
+| pageItemCount     | int      | Gets or sets page item count. The number of records that are desired to be displayed on a page                                                                                                                                            |
 
 ### Service Method
 
@@ -1097,22 +1109,20 @@ Returns total transaction volume and count between given dates. Start and end da
 
 ## Possible Errors and Error Codes
 
-| **Error Code** | **Error Description**                                        |
-| -------------- | ------------------------------------------------------------ |
-| 100            | User not found.                                              |
-| 101            | Merchant  information could not found.                       |
-| 105            | Insufficient  funds.                                         |
-| 107            | The user exceeds the balance limit with this transaction.    |
-| 111            | The user exceeds the monthly transaction limit with this transaction |
-| 112            | An amount has been sent below the minimum deposit limit.     |
-| 203            | The user account is blocked.                                 |
-| 997            | The authorization to make a cash deposit is not defined in your account. You  should contact your customer representative. |
-| 998            | The parameters you submitted are not in the expected format. Example: one of the  mandatory fields is not provided. |
-| 999            | An error occurred in the Papara system.                      |
+| **Error Code** | **Error Description**                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 100            | User not found.                                                                                                           |
+| 101            | Merchant information could not found.                                                                                     |
+| 105            | Insufficient funds.                                                                                                       |
+| 107            | The user exceeds the balance limit with this transaction.                                                                 |
+| 111            | The user exceeds the monthly transaction limit with this transaction                                                      |
+| 112            | An amount has been sent below the minimum deposit limit.                                                                  |
+| 203            | The user account is blocked.                                                                                              |
+| 997            | The authorization to make a cash deposit is not defined in your account. You should contact your customer representative. |
+| 998            | The parameters you submitted are not in the expected format. Example: one of the mandatory fields is not provided.        |
+| 999            | An error occurred in the Papara system.                                                                                   |
 
-
-
-# <a name="mass-payment">Mass Payment</a> 
+# <a name="mass-payment">Mass Payment</a>
 
 This part is the technical integration statement prepared for merchants those want to distribute payments to their users quickly, safely and widely through Papara.
 
@@ -1124,16 +1134,16 @@ Returns information about the payment distribution process. To perform this oper
 
 `MassPayment` is used by mass payment service to match returning mass payment values from API.
 
-| **Variable Name** | **Type** | **Description**                                    |
-| ----------------- | -------- | -------------------------------------------------- |
-| massPaymentId     | string   | Returns mass payment ID                            |
-| id                | int?     | Returns ID which is created after  payment is done |
-| createdAt         | DateTime | Returns created date                               |
-| amount            | float    | Returns amount of payment                          |
-| currency          | int?     | Returns currency. Values are “0”,  “1”, “2”, “3”   |
-| fee               | float    | Returns fee                                        |
-| resultingBalance  | float    | Returns resulting balance                          |
-| description       | string   | Returns description                                |
+| **Variable Name** | **Type** | **Description**                                   |
+| ----------------- | -------- | ------------------------------------------------- |
+| massPaymentId     | string   | Returns mass payment ID                           |
+| id                | int?     | Returns ID which is created after payment is done |
+| createdAt         | DateTime | Returns created date                              |
+| amount            | float    | Returns amount of payment                         |
+| currency          | int?     | Returns currency. Values are “0”, “1”, “2”, “3”   |
+| fee               | float    | Returns fee                                       |
+| resultingBalance  | float    | Returns resulting balance                         |
+| description       | string   | Returns description                               |
 
 ### MassPaymentGetOptions
 
@@ -1166,7 +1176,7 @@ Returns mass payment information for authorized merchant.
   {
     $getMassPaymentGetOptions = new MassPaymentGetOptions;
     $getMassPaymentGetOptions->id = "MASS_PAYMENT_ID";
-  
+
     $result = $this->client->MassPaymentService->getMassPayment($getMassPaymentGetOptions);
     return $result;
   }
@@ -1211,12 +1221,11 @@ Returns mass payment information for authorized merchant.
   {
     $getMassPaymentByReferenceOptions = new MassPaymentByReferenceOptions;
     $getMassPaymentByReferenceOptions->reference = "MASS_PAYMENT_REFERENCE";
-  
+
     $result = $this->client->MassPaymentService->getMassPaymentByReference($getMassPaymentByReferenceOptions);
     return $result;
   }
 ```
-
 
 ## Create Mass Payment To Account Number
 
@@ -1226,14 +1235,14 @@ Send money to Papara number. To perform this operation use `createMassPaymentWit
 
 `MassPaymentToPaparaNumberOptions` is used by mass payment service for providing request parameters.
 
-| **Variable Name**  | **Type** | **Description**                                              |
-| ------------------ | -------- | ------------------------------------------------------------ |
-| accountNumber     | string   | Gets or sets Papara account number. The  10-digit Papara number of the user who will receive the payment. It can be in  the format 1234567890 or PL1234567890. Before the Papara version transition,  the Papara number was called the wallet number.Old wallet numbers have been  changed to Papara number. Payment can be distributed to old wallet numbers. |
-| parseAccountNumber | int?     | Gets or sets parse account number. Parses  the account number to long type. In old papara integrations, account / wallet  number was made by starting with PL. The service was written in such a way  that it accepts numbers starting with PL, in order not to cause problems to  the member merchants that receive the papara number from their users. |
-| amount            | float | Gets or sets amount. The amount of the  payment transaction. This amount will be transferred to the account of the  user who received the payment. This figure plus transaction fee will be  charged to the merchant account. |
-| massPaymentId     | string   | Gets or sets mass payment ID. Unique value  sent by merchant to prevent erroneous repetition in payment transactions. If  a massPaymentId that was sent previously and succeeded is sent again with a new  request, the request will fail. |
-| turkishNationalId | long     | Gets or sets national identity number.It  provides the control of the identity information sent by the user who will  receive the payment, in the Papara system. In case of a conflict of  credentials, the transaction will not take place. |
-| description       | string   | Gets or sets description. Description of  the transaction provided by the merchant. It is not a required field. If  sent, the customer sees in the transaction descriptions. |
+| **Variable Name**  | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                            |
+| ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| accountNumber      | string   | Gets or sets Papara account number. The 10-digit Papara number of the user who will receive the payment. It can be in the format 1234567890 or PL1234567890. Before the Papara version transition, the Papara number was called the wallet number.Old wallet numbers have been changed to Papara number. Payment can be distributed to old wallet numbers. |
+| parseAccountNumber | int?     | Gets or sets parse account number. Parses the account number to long type. In old papara integrations, account / wallet number was made by starting with PL. The service was written in such a way that it accepts numbers starting with PL, in order not to cause problems to the member merchants that receive the papara number from their users.       |
+| amount             | float    | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account.                                                                                                                                 |
+| massPaymentId      | string   | Gets or sets mass payment ID. Unique value sent by merchant to prevent erroneous repetition in payment transactions. If a massPaymentId that was sent previously and succeeded is sent again with a new request, the request will fail.                                                                                                                    |
+| turkishNationalId  | long     | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place.                                                                                                                  |
+| description        | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.                                                                                                                                                                                 |
 
 ### Service Method
 
@@ -1277,13 +1286,13 @@ Send money to e-mail address registered in Papara. To perform this operation use
 
 `MassPaymentToEmailOptions` is used by mass payment service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| email             | string   | Gets or sets e-mail address. Registered  email address of the user receiving the payment. |
-| amount            | float    | Gets or sets amount. The amount of the  payment transaction. This amount will be transferred to the account of the  user who received the payment. This figure plus transaction fee will be  charged to the merchant account. |
-| massPaymentId     | string   | Gets or setsmass payment ID. Unique value  sent by merchant to prevent erroneous repetition in payment transactions. If  a massPaymentId that was sent previously and succeeded is sent again with a  new request, the request will fail. |
-| turkishNationalId | long     | Gets or setsnational identity number.It  provides the control of the identity information sent by the user who will  receive the payment, in the Papara system. In case of a conflict of  credentials, the transaction will not take place. |
-| description       | string   | Gets or sets description. Description of  the transaction provided by the merchant. It is not a required field. If  sent, the customer sees in the transaction descriptions. |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                          |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| email             | string   | Gets or sets e-mail address. Registered email address of the user receiving the payment.                                                                                                                                                 |
+| amount            | float    | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account.               |
+| massPaymentId     | string   | Gets or setsmass payment ID. Unique value sent by merchant to prevent erroneous repetition in payment transactions. If a massPaymentId that was sent previously and succeeded is sent again with a new request, the request will fail.   |
+| turkishNationalId | long     | Gets or setsnational identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place. |
+| description       | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.                                                               |
 
 ### Service Method
 
@@ -1326,13 +1335,13 @@ Send money to phone number registered in Papara. To perform this operation use `
 
 `MassPaymentToPhoneNumberOptions` is used by mass payment service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| phoneNumber       | string   | Gets or sets user's phone number. The  mobile number of the user who will receive the payment, registered in Papara.  It should contain a country code and start with + |
-| amount            | float    | Gets or sets amount. The amount of the  payment transaction. This amount will be transferred to the account of the  user who received the payment. This figure plus transaction fee will be  charged to the merchant account |
-| massPaymentId     | string   | Gets or sets mass payment ID. Unique value  sent by merchant to prevent erroneous repetition in payment transactions. If  a MassPaymentId that was sent previously and succeeded is sent again with a new  request, the request will fail |
-| turkishNationalId | long     | Gets or sets national identity number.It  provides the control of the identity information sent by the user who will  receive the payment, in the Papara system. In case of a conflict of  credentials, the transaction will not take place |
-| description       | string   | Gets or sets description. Description of  the transaction provided by the merchant. It is not a required field. If  sent, the customer sees in the transaction descriptions |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                          |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| phoneNumber       | string   | Gets or sets user's phone number. The mobile number of the user who will receive the payment, registered in Papara. It should contain a country code and start with +                                                                    |
+| amount            | float    | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account                |
+| massPaymentId     | string   | Gets or sets mass payment ID. Unique value sent by merchant to prevent erroneous repetition in payment transactions. If a MassPaymentId that was sent previously and succeeded is sent again with a new request, the request will fail   |
+| turkishNationalId | long     | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place |
+| description       | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions                                                                |
 
 ### Service Method
 
@@ -1369,20 +1378,18 @@ Creates a mass payment to given phone number for authorized merchant.
 
 ## Possible Errors and Error Codes
 
-| **Error Code** | **Error Description**                                        |
-| -------------- | ------------------------------------------------------------ |
-| 100            | User not found.                                              |
-| 105            | Insufficient funds                                           |
-| 107            | Receiver exceeds balance limit. The highest possible balance for simple accounts is  750 TL. |
-| 111            | Receiver exceeds monthly transaction limit. Simple accounts can receive payments from a total of 2000 TL of defined resources per month. |
-| 133            | MassPaymentID was used recently.                             |
-| 997            | You  are not authorized to distribute payments. You can contact your customer representative and request a payment distribution definition to your merchant  account. |
-| 998            | The  parameters you submitted are not in the expected format. Example: Customer number less than 10 digits. In this case, the error message contains details of the format error. |
-| 999            | An error  occurred in the Papara system.                     |
+| **Error Code** | **Error Description**                                                                                                                                                            |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 100            | User not found.                                                                                                                                                                  |
+| 105            | Insufficient funds                                                                                                                                                               |
+| 107            | Receiver exceeds balance limit. The highest possible balance for simple accounts is 750 TL.                                                                                      |
+| 111            | Receiver exceeds monthly transaction limit. Simple accounts can receive payments from a total of 2000 TL of defined resources per month.                                         |
+| 133            | MassPaymentID was used recently.                                                                                                                                                 |
+| 997            | You are not authorized to distribute payments. You can contact your customer representative and request a payment distribution definition to your merchant account.              |
+| 998            | The parameters you submitted are not in the expected format. Example: Customer number less than 10 digits. In this case, the error message contains details of the format error. |
+| 999            | An error occurred in the Papara system.                                                                                                                                          |
 
-
-
-# <a name="payments">Payments</a> 
+# <a name="payments">Payments</a>
 
 Payment service will be used for getting, creating or listing payments and refunding. Before showing the payment button to users, the merchant must create a payment transaction on Papara. Payment records are time dependent. Transaction records that are not completed and paid by the end user are deleted from Papara system after 1 hour. Completed payment records are never deleted and can always be queried with the API.
 
@@ -1394,29 +1401,29 @@ Returns payment information. To perform this operation use `getPayment` method o
 
 `Payment` is used by payment service to match returning payment values from API.
 
-| **Variable Name**        | **Type** | **Description**                                              |
-| ------------------------ | -------- | ------------------------------------------------------------ |
-| merchant                 | Account  | Returns merhcant                                             |
-| id                       | string   | Returns ID                                                   |
-| CreatedAt                | DateTime | Returns created date                                         |
-| merchantId               | string   | Returns merchant ID                                          |
-| userId                   | string   | Returns user ID                                              |
-| paymentMethod            | int      | Returns payment Method.  0 -  User completed transaction with existing Papara balance  1 -  User completed the transaction with a debit / credit card that was previously  defined.  2 -  User completed transaction via mobile payment. |
-| paymentMethodDescription | string   | Returns payment method description                           |
-| referenceId              | string   | Returns referance ID                                         |
-| orderDescription         | string   | Returns order description                                    |
-| status                   | int      | Returns status.  0 -  Awaiting, payment is not done yet.  1 -  Payment is done, transaction is completed.  2 -  Transactions is refunded by merchant. |
-| statusDescription        | string   | Returns status description                                   |
-| amount                   | float    | Returns amount                                               |
-| fee                      | float    | Returns fee                                                  |
-| currency                 | int      | Returns currency. Values are “0”,  “1”, “2”, “3”             |
-| notificationUrl          | string   | Returns notification URL                                     |
-| notificationDone         | bool     | Returns if notification was made                             |
-| redirectUrl              | string   | Returns redirect URL                                         |
-| raymentUrl               | string   | Returns payment URL                                          |
-| merchantSecretKey        | string   | Returns merchant secret key                                  |
-| returningRedirectUrl     | string   | Returns returning Redirect URL                               |
-| turkishNationalId        | long     | Returns national identity number                             |
+| **Variable Name**        | **Type** | **Description**                                                                                                                                                                                                                   |
+| ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| merchant                 | Account  | Returns merhcant                                                                                                                                                                                                                  |
+| id                       | string   | Returns ID                                                                                                                                                                                                                        |
+| CreatedAt                | DateTime | Returns created date                                                                                                                                                                                                              |
+| merchantId               | string   | Returns merchant ID                                                                                                                                                                                                               |
+| userId                   | string   | Returns user ID                                                                                                                                                                                                                   |
+| paymentMethod            | int      | Returns payment Method. 0 - User completed transaction with existing Papara balance 1 - User completed the transaction with a debit / credit card that was previously defined. 2 - User completed transaction via mobile payment. |
+| paymentMethodDescription | string   | Returns payment method description                                                                                                                                                                                                |
+| referenceId              | string   | Returns referance ID                                                                                                                                                                                                              |
+| orderDescription         | string   | Returns order description                                                                                                                                                                                                         |
+| status                   | int      | Returns status. 0 - Awaiting, payment is not done yet. 1 - Payment is done, transaction is completed. 2 - Transactions is refunded by merchant.                                                                                   |
+| statusDescription        | string   | Returns status description                                                                                                                                                                                                        |
+| amount                   | float    | Returns amount                                                                                                                                                                                                                    |
+| fee                      | float    | Returns fee                                                                                                                                                                                                                       |
+| currency                 | int      | Returns currency. Values are “0”, “1”, “2”, “3”                                                                                                                                                                                   |
+| notificationUrl          | string   | Returns notification URL                                                                                                                                                                                                          |
+| notificationDone         | bool     | Returns if notification was made                                                                                                                                                                                                  |
+| redirectUrl              | string   | Returns redirect URL                                                                                                                                                                                                              |
+| raymentUrl               | string   | Returns payment URL                                                                                                                                                                                                               |
+| merchantSecretKey        | string   | Returns merchant secret key                                                                                                                                                                                                       |
+| returningRedirectUrl     | string   | Returns returning Redirect URL                                                                                                                                                                                                    |
+| turkishNationalId        | long     | Returns national identity number                                                                                                                                                                                                  |
 
 ### PaymentGetOptions
 
@@ -1459,14 +1466,13 @@ Returns payment and balance information for authorized merchant.
 
 Returns payment information. To perform this operation use `getPayment` method on `getPaymentByReference` service. `referenceId` should be provided.
 
-
 ### PaymentGetByReferenceOptions
 
 `PaymentGetByReferenceOptions` will be used as parameter while acquiring payment information.
 
-| **Variable Name** | **Type** | **Description**                |
-| ----------------- | -------- | ------------------------------ |
-| referenceId                | string   | Gets or sets unique payment reference number |
+| **Variable Name** | **Type** | **Description**                              |
+| ----------------- | -------- | -------------------------------------------- |
+| referenceId       | string   | Gets or sets unique payment reference number |
 
 ### Service Method
 
@@ -1474,8 +1480,8 @@ Returns payment information. To perform this operation use `getPayment` method o
 
 Returns payment and balance information for authorized merchant.
 
-| **Method** | **Params**        | **Return Type**       |
-| ---------- | ----------------- | --------------------- |
+| **Method**            | **Params**                   | **Return Type**       |
+| --------------------- | ---------------------------- | --------------------- |
 | getPaymentByReference | PaymentGetByReferenceOptions | PaparaResult<Payment> |
 
 #### Usage
@@ -1497,7 +1503,6 @@ Returns payment and balance information for authorized merchant.
   }
 ```
 
-
 ## Create Payment
 
 Creates a new payment record. To perform this operation use `createPayment` method on `Payment` service. `amount`, `referenceId`, `orderDescription`, `notificationUrl` and `redirectUrl` should be provided.
@@ -1506,14 +1511,14 @@ Creates a new payment record. To perform this operation use `createPayment` meth
 
 `PaymentCreateOptions` is used by payment service for providing request parameters.
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| amount            | float    | Gets or sets amount. The amount of the  payment transaction. Exactly this amount will be taken from the account of  the user who made the payment, and this amount will be displayed to the user  on the payment screen. Amount field can be minimum 1.00 and maximum 500000.00 |
-| referenceId       | string   | Gets or sets reference ID. Reference  information of the payment transaction in the merchant system. The  transaction will be returned to the merchant without being changed in the  result notifications as it was sent to Papara. Must be no more than 100  characters. This area does not have to be unique and Papara does not make  such a check |
-| orderDescription  | string   | Gets or sets order description.  Description of the payment transaction. The sent value will be displayed to  the user on the Papara checkout page. Having a description that accurately  identifies the transaction initiated by the user, will increase the chance of  successful payment |
-| notificationUrl   | string   | Gets or sets notification URL. The URL to  which payment notification requests (IPN) will be sent. With this field, the  URL where the POST will be sent to the payment merchant must be sent. To the  URL sent with "notificationUrl", Papara will send a payment object  containing all information of the payment with an HTTP POST request  immediately after the payment is completed. If the merchant returns 200 OK to  this request, no notification will be made again. If the merchant does not  return 200 OK to this notification, Papara will continue to make payment  notification (IPN) requests for 24 hours until the merchant returns to 200 OK |
-| redirectUrl       | string   | Gets or sets redirect URL. URL to which  the user will be redirected at the end of the process |
-| turkishNationalId | long     | Gets or sets national identity number.It  provides the control of the identity information sent by the user who will  receive the payment, in the Papara system. In case of a conflict of  credentials, the transaction will not take place |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| amount            | float    | Gets or sets amount. The amount of the payment transaction. Exactly this amount will be taken from the account of the user who made the payment, and this amount will be displayed to the user on the payment screen. Amount field can be minimum 1.00 and maximum 500000.00                                                                                                                                                                                                                                                                                                                                                                               |
+| referenceId       | string   | Gets or sets reference ID. Reference information of the payment transaction in the merchant system. The transaction will be returned to the merchant without being changed in the result notifications as it was sent to Papara. Must be no more than 100 characters. This area does not have to be unique and Papara does not make such a check                                                                                                                                                                                                                                                                                                           |
+| orderDescription  | string   | Gets or sets order description. Description of the payment transaction. The sent value will be displayed to the user on the Papara checkout page. Having a description that accurately identifies the transaction initiated by the user, will increase the chance of successful payment                                                                                                                                                                                                                                                                                                                                                                    |
+| notificationUrl   | string   | Gets or sets notification URL. The URL to which payment notification requests (IPN) will be sent. With this field, the URL where the POST will be sent to the payment merchant must be sent. To the URL sent with "notificationUrl", Papara will send a payment object containing all information of the payment with an HTTP POST request immediately after the payment is completed. If the merchant returns 200 OK to this request, no notification will be made again. If the merchant does not return 200 OK to this notification, Papara will continue to make payment notification (IPN) requests for 24 hours until the merchant returns to 200 OK |
+| redirectUrl       | string   | Gets or sets redirect URL. URL to which the user will be redirected at the end of the process                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| turkishNationalId | long     | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
 ### Service Method
 
@@ -1551,7 +1556,7 @@ Creates a payment for authorized merchant.
   }
 ```
 
-## Refund 
+## Refund
 
 Refunds a completed payment of the merchant with the provided payment ID .To perform this operation use `refund` method on `Payment` service. `id` should be provided.
 
@@ -1600,37 +1605,37 @@ Lists the completed payments of the merchant in a sequential order. To perform t
 
 `PaymentListOptions` is used by payment service for providing request parameters
 
-| **Variable Name** | **Type** | **Description**                                              |
-| ----------------- | -------- | ------------------------------------------------------------ |
-| pageIndex         | int      | Gets or sets page index. It is the index  number of the page that is wanted to display from the pages calculated on the  basis of the number of records (pageItemCount) desired to be displayed on a  page. Note: the first page is always 1 |
-| pageItemCount     | Int      | Gets or sets page item count. The number  of records that are desired to be displayed on a page |
+| **Variable Name** | **Type** | **Description**                                                                                                                                                                                                                           |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pageIndex         | int      | Gets or sets page index. It is the index number of the page that is wanted to display from the pages calculated on the basis of the number of records (pageItemCount) desired to be displayed on a page. Note: the first page is always 1 |
+| pageItemCount     | Int      | Gets or sets page item count. The number of records that are desired to be displayed on a page                                                                                                                                            |
 
 ### PaymentListItem
 
 `PaymentListItem` is used by payment service to match returning completed payment list values list API.
 
-| **Variable Name**        | **Type** | **Description**                                              |
-| ------------------------ | -------- | ------------------------------------------------------------ |
-| Id                       | string   | Returns payment ID                                           |
-| CreatedAt                | DateTime | Returns created date                                         |
-| MerchantId               | string   | Returns merchant ID                                          |
-| UserId                   | string   | Returns user ID                                              |
-| PaymentMethod            | int      | Returns payment Method.  0 -  User completed transaction with existing Papara balance  1 -  User completed the transaction with a debit / credit card that was previously  defined.  2 -  User completed transaction via mobile payment. |
-| PaymentMethodDescription | string   | Returns payment method description                           |
-| ReferenceId              | string   | Returns reference ID                                         |
-| OrderDescription         | string   | Returns order description                                    |
-| Status                   | int      | Returns status.  0 -  Awaiting, payment is not done yet.  1 -  Payment is done, transaction is completed.  2 -  Transactions is refunded by merchant. |
-| StatusDescription        | string   | Returns status description                                   |
-| Amount                   | float    | Returns amount                                               |
-| Fee                      | float    | Returns fee                                                  |
-| Currency                 | int      | Returns currency. Values are “0”,  “1”, “2”, “3”             |
-| NotificationUrl          | string   | Returns notification URL                                     |
-| NotificationDone         | bool     | Returns if notification was made                             |
-| RedirectUrl              | string   | Returns redirect URL                                         |
-| PaymentUrl               | string   | Returns payment URL                                          |
-| MerchantSecretKey        | string   | Returns merchant secret key                                  |
-| ReturningRedirectUrl     | string   | Returns returning Redirect URL                               |
-| TurkishNationalId        | long     | Returns national identity number                             |
+| **Variable Name**        | **Type** | **Description**                                                                                                                                                                                                                   |
+| ------------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Id                       | string   | Returns payment ID                                                                                                                                                                                                                |
+| CreatedAt                | DateTime | Returns created date                                                                                                                                                                                                              |
+| MerchantId               | string   | Returns merchant ID                                                                                                                                                                                                               |
+| UserId                   | string   | Returns user ID                                                                                                                                                                                                                   |
+| PaymentMethod            | int      | Returns payment Method. 0 - User completed transaction with existing Papara balance 1 - User completed the transaction with a debit / credit card that was previously defined. 2 - User completed transaction via mobile payment. |
+| PaymentMethodDescription | string   | Returns payment method description                                                                                                                                                                                                |
+| ReferenceId              | string   | Returns reference ID                                                                                                                                                                                                              |
+| OrderDescription         | string   | Returns order description                                                                                                                                                                                                         |
+| Status                   | int      | Returns status. 0 - Awaiting, payment is not done yet. 1 - Payment is done, transaction is completed. 2 - Transactions is refunded by merchant.                                                                                   |
+| StatusDescription        | string   | Returns status description                                                                                                                                                                                                        |
+| Amount                   | float    | Returns amount                                                                                                                                                                                                                    |
+| Fee                      | float    | Returns fee                                                                                                                                                                                                                       |
+| Currency                 | int      | Returns currency. Values are “0”, “1”, “2”, “3”                                                                                                                                                                                   |
+| NotificationUrl          | string   | Returns notification URL                                                                                                                                                                                                          |
+| NotificationDone         | bool     | Returns if notification was made                                                                                                                                                                                                  |
+| RedirectUrl              | string   | Returns redirect URL                                                                                                                                                                                                              |
+| PaymentUrl               | string   | Returns payment URL                                                                                                                                                                                                               |
+| MerchantSecretKey        | string   | Returns merchant secret key                                                                                                                                                                                                       |
+| ReturningRedirectUrl     | string   | Returns returning Redirect URL                                                                                                                                                                                                    |
+| TurkishNationalId        | long     | Returns national identity number                                                                                                                                                                                                  |
 
 ### Service Method
 
@@ -1664,15 +1669,13 @@ Returns a list of completed payments sorted by newest to oldest for authorized m
 
 ## Possible Errors and Error Codes
 
-| **Error Code** | **Error Description**                                        |
-| -------------- | ------------------------------------------------------------ |
-| 997            | You  are not authorized to accept payments. You should contact your customer  representative. |
-| 998            | The  parameters you submitted are not in the expected format. Example: one of the  mandatory fields is not provided. |
-| 999            | An  error occurred in the Papara system.                     |
+| **Error Code** | **Error Description**                                                                                              |
+| -------------- | ------------------------------------------------------------------------------------------------------------------ |
+| 997            | You are not authorized to accept payments. You should contact your customer representative.                        |
+| 998            | The parameters you submitted are not in the expected format. Example: one of the mandatory fields is not provided. |
+| 999            | An error occurred in the Papara system.                                                                            |
 
-
-
-# <a name="validation">Validation</a> 
+# <a name="validation">Validation</a>
 
 Validation service will be used for validating an end user. Validation can be performed by account number, e-mail address, phone number, national identity number.
 
@@ -1680,7 +1683,7 @@ Validation service will be used for validating an end user. Validation can be pe
 
 It is used to validate users with Papara UserId. To perform this operation use `validateById` method on `Validation` service. `userId` should be provided.
 
-### Validation Model           
+### Validation Model
 
 `Validation` is used by validation service to match returning user value from API
 
@@ -1694,7 +1697,7 @@ It is used to validate users with Papara UserId. To perform this operation use `
 | Tckn              | Long     | Returns user national identity number |
 | AccountNumber     | int?     | Returns user account number           |
 
-### ValidationByIdOptions 
+### ValidationByIdOptions
 
 `ValidationByIdOptions` is used by validation service for providing request parameters.
 
@@ -1895,8 +1898,6 @@ Returns end user information for validation by given user national identity numb
   }
 ```
 
-
-
 # <a name="response-types">Response Types</a>
 
 This part contains technical information about return values from API.
@@ -1905,12 +1906,12 @@ This part contains technical information about return values from API.
 
 Papara Service Result type. Handles response data types returning from API.
 
-| **Variable Name** | **Type**             | **Description**                                              |
-| ----------------- | -------------------- | ------------------------------------------------------------ |
-| data              | bool                 | Gets or sets single result data.                             |
+| **Variable Name** | **Type**             | **Description**                                                                |
+| ----------------- | -------------------- | ------------------------------------------------------------------------------ |
+| data              | bool                 | Gets or sets single result data.                                               |
 | succeeded         | bool                 | Gets or sets a value indicating whether operation resulted successfully or not |
-| error             | ServiceResultError   | Gets or sets a value indicating whether operation failed or not |
-| result            | ServiceResultSuccess | Gets or sets success result                                  |
+| error             | ServiceResultError   | Gets or sets a value indicating whether operation failed or not                |
+| result            | ServiceResultSuccess | Gets or sets success result                                                    |
 
 ## ServiceResultError
 
@@ -1929,5 +1930,3 @@ Papara Service Success Result type. Success responses returning from API.
 | ----------------- | -------- | ------------------------ |
 | Message           | string   | Returns success messages |
 | Code              | int      | Returns success codes    |
-
- 
