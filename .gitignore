@@ -27,3 +27,4 @@ clover.xml
 .phpdoc/*
 phpdoc.xml
 .phpunit.result.cache
+.vs/
