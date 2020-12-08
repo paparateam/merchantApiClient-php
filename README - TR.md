@@ -88,14 +88,14 @@ API'da bulunan bütün para birimleri aşağıdaki gibidir.
 
 Giriş Türleri hesap defterlerinde ve para yatırma işlemlerinde parayı takip etmek için kullanılır. Olası giriş türleri aşağıdaki gibidir.
 
-| **Anahtar**                   | **Değer** | **Açıklama**                                                                                        |
-| ----------------------------- | --------- | --------------------------------------------------------------------------------------------------- |
-| BankTransfer                  | 1         | Banka Transferi: Para Yatırma veya Çekme                                                            |
+| **Anahtar**                   | **Değer** | **Açıklama**                                                 |
+| ----------------------------- | --------- | ------------------------------------------------------------ |
+| BankTransfer                  | 1         | Banka Transferi: Para Yatırma veya Çekme                     |
 | CorporateCardTransaction      | 2         | Papara Kurumsal Kart İşlemi: Üye iş yerine tahsis edilen kurum kartı ile gerçekleştirilen işlemdir. |
-| LoadingMoneyFromPhysicalPoint | 6         | Fiziki Noktadan Para Yükleme: Anlaşmalı yerden nakit para yatırma işlemi                            |
-| MerchantPayment               | 8         | Satıcı Ödemesi: Papara ile Ödeme                                                                    |
-| PaymentDistribution           | 9         | Ödeme Dağıtımı: Papara ile toplu ödeme                                                              |
-| EduPos                        | 11        | Çevrimdışı ödeme. Papara üzerinden EDU POS                                                          |
+| LoadingMoneyFromPhysicalPoint | 6         | Fiziki Noktadan Para Yükleme: Anlaşmalı yerden nakit para yatırma işlemi |
+| MerchantPayment               | 8         | Satıcı Ödemesi: Papara ile Ödeme                             |
+| PaymentDistribution           | 9         | Ödeme Dağıtımı: Papara ile toplu ödeme                       |
+| EduPos                        | 11        | Çevrimdışı ödeme. Papara üzerinden EDU POS                   |
 
 # PaymentMethod
 
@@ -129,20 +129,20 @@ Satıcı hesabı ve bakiye bilgilerini döndürür. Bakiye bilgileri cari bakiye
 
 `Account` sınıfı, `Account` servisi tarafından API'den dönen hesap bilgileri eşleştirmek için kullanılır ve hesap bilgilerini içerir.
 
-| **Değişken Adı**    | **Tip**                  | **Açıklama**                                                           |
-| ------------------- | ------------------------ | ---------------------------------------------------------------------- |
-| LegalName           | string                   | Satıcının şirket unvanını alır veya belirler.                          |
-| BrandName           | string                   | Satıcının şirket marka adını alır veya belirler.                       |
+| **Değişken Adı**    | **Tip**                  | **Açıklama**                                                 |
+| ------------------- | ------------------------ | ------------------------------------------------------------ |
+| LegalName           | string                   | Satıcının şirket unvanını alır veya belirler.                |
+| BrandName           | string                   | Satıcının şirket marka adını alır veya belirler.             |
 | AllowedPaymentTypes | List<AllowedPaymentType> | Satıcının şirket için kabul edilen ödeme tiplerini alır veya belirler. |
-| Balances            | List<AccountBalance>     | Satıcının şirketin hesap bakiyesini alır veya belirler.                |
+| Balances            | List<AccountBalance>     | Satıcının şirketin hesap bakiyesini alır veya belirler.      |
 
 ### AllowedPaymentType
 
-`AllowedPaymentType` sınıfı, `Account` servisi tarafından API'den dönen hesap bilgilerini eşleştirmek için kullanılır. `AllowPaymentType`, izin verilen ödeme türlerini gösterir.
+ `AllowedPaymentType` sınıfı, `Account` servisi tarafından API'den dönen hesap bilgilerini eşleştirmek için kullanılır. `AllowPaymentType`, izin verilen ödeme türlerini gösterir.
 
-| **Değişken Adı** | **Tip** | **Açıklama**                                                                                                       |
-| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
-| PaymentMethod    | int     | Ödeme tipini alır veya belirler.<br />0 – Papara Hesap Bakiyesi <br />1 – Kredi/Banka kartı <br />2 – Mobil Ödeme. |
+| **Değişken Adı** | **Tip** | **Açıklama**                                                 |
+| ---------------- | ------- | ------------------------------------------------------------ |
+| PaymentMethod    | int     | Ödeme tipini alır veya belirler.<br />0 – Papara Hesap Bakiyesi  <br />1 – Kredi/Banka kartı <br />2 – Mobil Ödeme. |
 
 ### AccountBalance
 
@@ -167,7 +167,7 @@ Yetkili satıcı için hesap bilgilerini ve cari bakiyeyi getirir.
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function GetAccount()
   {
     $result = $this->client->AccountService->GetAccount();
@@ -183,49 +183,49 @@ Satıcı hesap hareketlerini(işlem listesi) sayfalı biçimde döndürür. Bu m
 
 `AccountLedger` sınıfı, `Account` servisi tarafından API'den dönen değerleri eşleştirmek için kullanılır. Bir işlemin kendisini temsil eder.
 
-| **Değişken Adı**    | **Tip**      | **Açıklama**                                                                                                                                                                                                                                                                                |
-| ------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                  | int          | Merchant ID alır veya belirler.                                                                                                                                                                                                                                                             |
-| CreatedAt           | DateTime     | Hesap hareketlerinin oluşma tarihinialır veya belirler.                                                                                                                                                                                                                                     |
-| EntryType           | EntryType    | Giriş türünü alır veya belirler.                                                                                                                                                                                                                                                            |
-| EntryTypeName       | string       | Giriş tür adını alır veya belirler.                                                                                                                                                                                                                                                         |
-| Amount              | float        | Tutarı alır veya belirler.                                                                                                                                                                                                                                                                  |
-| Fee                 | float        | Hizmet bedelini alır veya belirler.                                                                                                                                                                                                                                                         |
-| Currency            | int          | Para birimini alır veya belirler.                                                                                                                                                                                                                                                           |
-| CurrencyInfo        | CurrencyInfo | Para birimi bilgisini alır veya belirler.                                                                                                                                                                                                                                                   |
-| ResultingBalance    | float        | Kalan bakiyeyi alır veya belirler.                                                                                                                                                                                                                                                          |
-| Description         | string       | Açıklamayı alır veya belirler.                                                                                                                                                                                                                                                              |
+| **Değişken Adı**    | **Tip**      | **Açıklama**                                                 |
+| ------------------- | ------------ | ------------------------------------------------------------ |
+| ID                  | int          | Merchant ID alır veya belirler.                              |
+| CreatedAt           | DateTime     | Hesap hareketlerinin oluşma tarihinialır veya belirler.      |
+| EntryType           | EntryType    | Giriş türünü alır veya belirler.                             |
+| EntryTypeName       | string       | Giriş tür adını alır veya belirler.                          |
+| Amount              | float        | Tutarı alır veya belirler.                                   |
+| Fee                 | float        | Hizmet bedelini alır veya belirler.                          |
+| Currency            | int          | Para birimini alır veya belirler.                            |
+| CurrencyInfo        | CurrencyInfo | Para birimi bilgisini alır veya belirler.                    |
+| ResultingBalance    | float        | Kalan bakiyeyi alır veya belirler.                           |
+| Description         | string       | Açıklamayı alır veya belirler.                               |
 | MassPaymentId       | string       | Toplu ödeme ID'sini alır veya belirler. Ödeme işlemlerinde mükerrer tekrarı önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Hesap hareketlerinde toplu ödeme türü işlem kayıtlarında işlemin kontrolünü sağlamak için görüntülenir. Diğer ödeme türlerinde boş olacaktır. |
-| CheckoutPaymentId   | string       | Ödeme ID'sini alır veya belirler. Ödeme kaydı işleminde veri nesnesinde bulunan kimlik alanıdır. Ödeme işleminin benzersiz tanımlayıcısıdır. Hesap hareketlerinde kasa tipi işlem kayıtlarında görüntülenir. Diğer ödeme türlerinde boş olacaktır.                                          |
-| CheckoutReferenceID | string       | Checkout referans ID'ini alır veya belirler. Bu, ödeme işlemi kaydı oluşturulurken gönderilen referans kimliği alanıdır. Üye işyeri sisteminde ödeme işleminin referans bilgisidir. Hesap hareketlerinde kasa tipi işlem kayıtlarında görüntülenir. Diğer ödeme türlerinde boş olacaktır    |
+| CheckoutPaymentId   | string       | Ödeme ID'sini alır veya belirler. Ödeme kaydı işleminde veri nesnesinde bulunan kimlik alanıdır. Ödeme işleminin benzersiz tanımlayıcısıdır. Hesap hareketlerinde kasa tipi işlem kayıtlarında görüntülenir. Diğer ödeme türlerinde boş olacaktır. |
+| CheckoutReferenceID | string       | Checkout referans ID'ini alır veya belirler. Bu, ödeme işlemi kaydı oluşturulurken gönderilen referans kimliği alanıdır. Üye işyeri sisteminde ödeme işleminin referans bilgisidir. Hesap hareketlerinde kasa tipi işlem kayıtlarında görüntülenir. Diğer ödeme türlerinde boş olacaktır |
 
 ### CurrencyInfo
 
 `CurrencyInfo` sınıfı, `AccountLedger` modeli tarafından API'den dönen para birimi değerlerini almak veya ayarlamak için kullanılır. Hesap hareketlerinde bulunan para birimi bilgilerini temsil eder.
 
-| **Değişken Adı**     | **Tip**  | **Açıklama**                                                               |
-| -------------------- | -------- | -------------------------------------------------------------------------- |
-| CurrencyEnum         | Currency | Para birimi tipini alır veya belirler                                      |
-| Symbol               | string   | Para birimi sembolünü alır veya belirler                                   |
-| Code                 | string   | Para birimi kodunu alır veya belirler                                      |
-| PreferredDisplayCode | string   | Para biriminin tercih edilen gösterim kodunu alır veya belirler            |
-| Name                 | string   | Para biriminin adını alır veya belirler                                    |
-| IsCryptoCurrency     | bool     | Para biriminin kripto para olup olmadığını alır veya belirler              |
+| **Değişken Adı**     | **Tip**  | **Açıklama**                                                 |
+| -------------------- | -------- | ------------------------------------------------------------ |
+| CurrencyEnum         | Currency | Para birimi tipini alır veya belirler                        |
+| Symbol               | string   | Para birimi sembolünü alır veya belirler                     |
+| Code                 | string   | Para birimi kodunu alır veya belirler                        |
+| PreferredDisplayCode | string   | Para biriminin tercih edilen gösterim kodunu alır veya belirler |
+| Name                 | string   | Para biriminin adını alır veya belirler                      |
+| IsCryptoCurrency     | bool     | Para biriminin kripto para olup olmadığını alır veya belirler |
 | Precision            | int      | Para biriminin virgülden sonra kaç hane gösterileceğini alır veya belirler |
-| IconUrl              | string   | Para birimi ikonu URL'ini alır veya belirler                               |
+| IconUrl              | string   | Para birimi ikonu URL'ini alır veya belirler                 |
 
 ### LedgerListOptions Model
 
 `LedgerListOptions` `Account` servisi tarafından hesap hareketleri listeleme işlemine istek parametreleri sağlamak için kullanılır
 
-| **Değişken Adı** | **Tip**  | **Açıklama**                                                                                                                                                     |
-| ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| startDate        | DateTime | İşlemlerin başlangıç tarihini alır veya belirler                                                                                                                 |
-| endDate          | DateTime | İşlemlerin bitiş tarihlerini alır veya belirler                                                                                                                  |
-| entryType        | enum     | İşlemlerin hareket tiplerini alır veya belirler                                                                                                                  |
-| accountNumber    | int      | Satıcı hesap numarasını alır veya belirler                                                                                                                       |
+| **Değişken Adı** | **Tip**  | **Açıklama**                                                 |
+| ---------------- | -------- | ------------------------------------------------------------ |
+| startDate        | DateTime | İşlemlerin başlangıç tarihini alır veya belirler             |
+| endDate          | DateTime | İşlemlerin bitiş tarihlerini alır veya belirler              |
+| entryType        | enum     | İşlemlerin hareket tiplerini alır veya belirler              |
+| accountNumber    | int      | Satıcı hesap numarasını alır veya belirler                   |
 | page             | int      | İstenen sayfa numarasını alır veya belirler. İstenen tarihte, istenen PageSize için 1'den fazla sonuç sayfası varsa, bunu sayfalar arasında dönmek için kullanın |
-| pageSize         | int      | Bir sayfada getirilmesi istenen kalem sayısını alır veya belirler. Min=1, Max=50                                                                                 |
+| pageSize         | int      | Bir sayfada getirilmesi istenen kalem sayısını alır veya belirler. Min=1, Max=50 |
 
 ### Servis Methodu
 
@@ -239,7 +239,7 @@ etkili satıcı için hesap hareketleri listesini döndürür.
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function ListLedgers()
   {
     $options = new LedgerListOptions;
@@ -255,7 +255,7 @@ public function ListLedgers()
 
 ## Mutabakat Bilgilerine Erişim
 
-Verilen süre içindeki işlemlerin sayısını ve hacmini hesaplar. Bu işlemi gerçekleştirmek için ` Account` servisinde bulunan ` GetSettlement` methodunu kullanın. ` startDate` ve ` endDate` gönderilmelidir.
+Verilen süre içindeki işlemlerin sayısını ve hacmini hesaplar. Bu işlemi gerçekleştirmek için ` Account`  servisinde bulunan ` GetSettlement` methodunu kullanın. ` startDate` ve ` endDate` gönderilmelidir.
 
 ### Settlement Model
 
@@ -288,7 +288,7 @@ Yetkili satıcı için mutabakat bilgilerini getirir.
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function GetSettlement()
   {
     $options = new SettlementGetOptions;
@@ -300,7 +300,7 @@ public function GetSettlement()
   }
 ```
 
-# <a name="banking">Bankacılık</a>
+# <a name="banking">Bankacılık</a> 
 
 Bu bölümde, banka hesaplarını Papara'da hızlı ve güvenli bir şekilde listelemek ve / veya banka hesaplarına para çekme talebi oluşturmak isteyen işyerleri için hazırlanmış teknik entegrasyon bilgileri yer almaktadır.
 
@@ -334,7 +334,7 @@ Yetkili satıcı için banka hesaplarını döndürür.
 
 #### Kullanım Şekli
 
-```php
+``` php 
 public function GetBankAccounts()
   {
 	$result = $this->client->BankingService->GetBankAccounts();
@@ -346,14 +346,14 @@ public function GetBankAccounts()
 
 Satıcılar için para çekme talepleri oluşturur. Bu işlemi gerçekleştirmek için `Banking` hizmetinde `Withdrawal` methodunu kullanın.
 
-### BankingWithdrawalOptions
+### BankingWithdrawalOptions 
 
 `BankingWithdrawalOptions` `Banking` servisi tarafından istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı** | **Tip** | **Açıklama**                                                                                                                                                          |
-| ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Değişken Adı** | **Tip** | **Açıklama**                                                 |
+| ---------------- | ------- | ------------------------------------------------------------ |
 | bankAccountId    | int?    | Para çekme işlemi tamamlandığında hangi paranın aktarılacağı hedef banka hesap kimliğini alır veya belirler.Banka hesaplarını listeleme isteği sonucunda elde edilir. |
-| amount           | float   | Çekilecek para tutarını alır veya belirler.                                                                                                                           |
+| amount           | float   | Çekilecek para tutarını alır veya belirler.                  |
 
 ### Servis Methodu
 
@@ -367,11 +367,11 @@ Yetkili satıcı için belirli bir banka hesabından para çekme talebi oluştur
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function Withdrawal()
   {
     $bankAccountResult = $this->client->BankingService->GetBankAccounts();
-
+    
     $bankAccount = $bankAccountResult->data[0];
 
     $options = new BankingWithdrawalOptions;
@@ -392,28 +392,28 @@ public function Withdrawal()
 | 120           | Banka hesabı bulunamadı                     |
 | 247           | Satıcı hesabı aktif değil                   |
 
-# <a name="cash-deposit">Fiziksel Nokta Entegrasyonu</a>
+# <a name="cash-deposit">Fiziksel Nokta Entegrasyonu</a> 
 
 Papara fiziksel nokta entegrasyonu ile son kullanıcıların Papara hesaplarına bakiye yükleyebilecekleri para yükleme noktası olabilir ve kazanç sağlayabilirsiniz. Fiziksel nokta entegrasyon yöntemleri sadece kullanıcıların Papara hesaplarına nakit yükledikleri senaryolarda kullanılmalıdır.
 
 ## Para Yatırma Bilgilerine Erişim
 
-Nakit para yükleme bilgilerini döndürür. Bu işlemi gerçekleştirmek için `CashDeposit` servisinde bulunan `getCashDeposit `methodunu kullanın. `id` gönderilmelidir.
+Nakit para yükleme bilgilerini döndürür. Bu işlemi gerçekleştirmek için `CashDeposit`  servisinde bulunan `getCashDeposit `methodunu kullanın. `id` gönderilmelidir.
 
 ### CashDeposit Model
 
 `CashDeposit` sınıfı, `CashDeposit` servisi tarafından API'den dönen nakit para yükleme bilgilerini eşleştirmek için kullanılır.
 
-| **Değişken Adı**  | **Tip**   | **Açıklama**                                                           |
-| ----------------- | --------- | ---------------------------------------------------------------------- |
-| MerchantReference | string    | Satıcının referans numarasını alır veya belirler.                      |
-| Id                | int?      | Nakit para yükleme Id'sini alır veya belirler.                         |
-| CreatedAt         | DateTime? | Nakit para yükleme işleminin yapıldığı alır veya belirler.             |
-| Amount            | float     | Nakit para yükleme işleminin tutarını alır veya belirler.              |
-| Currency          | int?      | Nakit para yükleme işleminin para birimini alır veya belirler.         |
-| Fee               | float     | Nakit para yükleme işleminin hizmet bedelini alır veya belirler.       |
+| **Değişken Adı**  | **Tip**   | **Açıklama**                                                 |
+| ----------------- | --------- | ------------------------------------------------------------ |
+| MerchantReference | string    | Satıcının referans numarasını alır veya belirler.            |
+| Id                | int?      | Nakit para yükleme Id'sini alır veya belirler.               |
+| CreatedAt         | DateTime? | Nakit para yükleme işleminin yapıldığı alır veya belirler.   |
+| Amount            | float     | Nakit para yükleme işleminin tutarını alır veya belirler.    |
+| Currency          | int?      | Nakit para yükleme işleminin para birimini alır veya belirler. |
+| Fee               | float     | Nakit para yükleme işleminin hizmet bedelini alır veya belirler. |
 | ResultingBalance  | float     | Nakit para yükleme işleminden sonra kalan bakiyeyi alır veya belirler. |
-| Description       | string    | Nakit para yükleme işleminin açıklamasını alır veya belirler.          |
+| Description       | string    | Nakit para yükleme işleminin açıklamasını alır veya belirler. |
 
 ### CashDepositGetOptions
 
@@ -433,9 +433,9 @@ Nakit para yükleme işlemi bilgilerini döner
 | -------------- | --------------------- | ------------------------- |
 | getCashDeposit | CashDepositGetOptions | PaparaResult<CashDeposit> |
 
-#### Kullanım Şekli
+####   Kullanım Şekli
 
-```php
+``` php
 public function getCashDeposit()
   {
     $cashDepositGetOptions = new CashDepositGetOptions;
@@ -452,10 +452,10 @@ Satıcı referans bilgileri ile birlikte fiziksel noktadan para yükleme işlemi
 
 ### CashDepositByReferenceOptions
 
-`CashDepositByReferenceOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
+`CashDepositByReferenceOptions`  `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı** | **Tip** | **Açıklama**                                                                               |
-| ---------------- | ------- | ------------------------------------------------------------------------------------------ |
+| **Değişken Adı** | **Tip** | **Açıklama**                                                 |
+| ---------------- | ------- | ------------------------------------------------------------ |
 | reference        | string  | Nakit para yükleme işleminin referans numarasını alır veya belirler. Zorunlu parametredir. |
 
 ### Servis Methodu
@@ -470,7 +470,7 @@ Satıcının benzersiz referans numarasını kullanarak bir nakit para yükleme 
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function getByReference()
   {
     $cashDepositByReferenceOptions = new CashDepositByReferenceOptions;
@@ -489,10 +489,10 @@ Kullanıcının telefon numarasını kullanarak fiziksel noktadan kullanıcıya 
 
 `CashDepositToPhoneOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| phoneNumber       | string  | Papara hesabına kayıtlı cep telefonu numarasını alır veya belirler.                                                                                                                                                                                                                                                                                               |
-| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır.                                                                                                                                                                                      |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| phoneNumber       | string  | Papara hesabına kayıtlı cep telefonu numarasını alır veya belirler. |
+| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır. |
 | merchantReference | string  | Satıcı referans numarasını alır veya belirler. Nakit yükleme işlemlerinde yanlış tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısasüre önce gönderilmiş ve başarılı bir merchantReference, yeni bir taleple yeniden gönderilirse, istek başarısız olur. Başarısız isteklerle gönderilen MerchantReference yeniden gönderilebilir. |
 
 ### Servis Methodu
@@ -507,7 +507,7 @@ Son kullanıcının telefon numarasını kullanarak nakit para yatırma isteği 
 
 #### Kullanım Şekli
 
-```php
+``` php
 public function createWithPhoneNumber()
   {
     $cashDepositToPhoneOptions = new CashDepositToPhoneOptions;
@@ -522,16 +522,16 @@ public function createWithPhoneNumber()
 
 ## Papara Numarası ile Para Yükleme
 
-Fiziksel noktadan Papara numarası ile kullanıcıya para yatırır. Bu işlemi yapmak için `Cash Deposit` servisinde bulunan `createWithAccountNumber` methodunu kullanın. `accountNumber`, `amount` ve `merchantReference` gönderilmelidir.
+Fiziksel noktadan Papara numarası ile kullanıcıya para yatırır. Bu işlemi yapmak için  `Cash Deposit` servisinde bulunan `createWithAccountNumber` methodunu kullanın. `accountNumber`, `amount` ve `merchantReference` gönderilmelidir.
 
 ### CashDepositToAccountNumberOptions
 
 `CashDepositToAccountNumberOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| accountNumber     | int     | Hesap numarasını alır veya belirler. Nakit yükleme yapılacak kullanıcının Papara hesap numarasıdır.                                                                                                                                                                                                                                                               |
-| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır.                                                                                                                                                                                      |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| accountNumber     | int     | Hesap numarasını alır veya belirler. Nakit yükleme yapılacak kullanıcının Papara hesap numarasıdır. |
+| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır. |
 | merchantReference | string  | Satıcı referans numarasını alır veya belirler. Nakit yükleme işlemlerinde yanlış tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısasüre önce gönderilmiş ve başarılı bir merchantReference, yeni bir taleple yeniden gönderilirse, istek başarısız olur. Başarısız isteklerle gönderilen MerchantReference yeniden gönderilebilir. |
 
 ### Servis Methodu
@@ -545,6 +545,7 @@ Son kullanıcının hesap numarasını kullanarak nakit para yükleme talebi olu
 | createWithAccountNumber | CashDepositToAccountNumberOptions | PaparaResult<CashDeposit> |
 
 #### Kullanım Şekli
+
 
 ```php
 public function createWithAccountNumber()
@@ -561,16 +562,16 @@ public function createWithAccountNumber()
 
 ## TC Kimlik Numarası ile Para Yükleme
 
-Fiziksel noktadan TCKN ile kullanıcıya para yatırır. Bu işlemi yapmak için `Cash Deposit` servisinde bulunan `createWithTckn` methodunu kullanın. `tckn`, `amount` ve `merchantReference` gönderilmelidir.
+Fiziksel noktadan TCKN ile kullanıcıya para yatırır. Bu işlemi yapmak için  `Cash Deposit` servisinde bulunan `createWithTckn` methodunu kullanın. `tckn`, `amount` ve `merchantReference` gönderilmelidir.
 
 ### CashDepositToTcknOptions
 
 `CashDepositToTcknOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| tckn              | long    | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler.                                                                                                                                                                                                                                                                                     |
-| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır                                                                                                                                                                                       |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| tckn              | long    | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler. |
+| amount            | float   | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır |
 | merchantReference | string  | Satıcı referans numarasını alır veya belirler. Nakit yükleme işlemlerinde yanlış tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısasüre önce gönderilmiş ve başarılı bir merchantReference, yeni bir taleple yeniden gönderilirse, istek başarısız olur. Başarısız isteklerle gönderilen MerchantReference yeniden gönderilebilir. |
 
 ### Servis Methodu
@@ -600,29 +601,29 @@ public function createWithTckn()
 
 ## TC Kimlik Numarasına Ön Ödemesiz Para Yükleme
 
-Fiziksel noktadan TCKN ile kullanıcıya ön ödemesiz olarak para yatırır. Bu işlemi yapmak için `Cash Deposit` servisinde bulunan `createProvisionWithTckn` methodunu kullanın. `tckn`, `amount` ve `merchantReference` gönderilmelidir.
+Fiziksel noktadan TCKN ile kullanıcıya ön ödemesiz olarak para yatırır. Bu işlemi yapmak için  `Cash Deposit` servisinde bulunan `createProvisionWithTckn` methodunu kullanın. `tckn`, `amount` ve `merchantReference` gönderilmelidir.
 
 ### CashDepositProvision Model
 
 `CashDepositProvision` sınıfı `CashDeposit` servisi tarafından API'den dönen ön ödemesiz para yükleme bilgilerini eşleştirmek için kullanılır
 
-| **Değişken Adı**  | **Tip**  | **Açıklama**                                                                  |
-| ----------------- | -------- | ----------------------------------------------------------------------------- |
-| Id                | int      | Ön ödemesiz para yükleme işleminin ID'sini alır veya belirler.                |
+| **Değişken Adı**  | **Tip**  | **Açıklama**                                                 |
+| ----------------- | -------- | ------------------------------------------------------------ |
+| Id                | int      | Ön ödemesiz para yükleme işleminin ID'sini alır veya belirler. |
 | CreatedAt         | DateTime | Ön ödemesiz para yükleme işleminin oluşturulma tarihini alır veya belirler.it |
-| Amount            | float    | Ön ödemesiz para yükleme işleminin tutarını alır veya belirler.               |
-| Currency          | int      | Ön ödemesiz para yükleme işleminin para birimini alır veya belirler.          |
-| MerchantReference | string   | Satıcı referans numarasını alır veya belirler.                                |
-| UserFullName      | string   | Kullanıcının tam adını alır veya belirler.                                    |
+| Amount            | float    | Ön ödemesiz para yükleme işleminin tutarını alır veya belirler. |
+| Currency          | int      | Ön ödemesiz para yükleme işleminin para birimini alır veya belirler. |
+| MerchantReference | string   | Satıcı referans numarasını alır veya belirler.               |
+| UserFullName      | string   | Kullanıcının tam adını alır veya belirler.                   |
 
 ### CashDepositToTcknOptions
 
 `CashDepositTcknControlOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tipi** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| tckn              | int      | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler.                                                                                                                                                                                                                                                                                     |
-| amount            | int      | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır.                                                                                                                                                                                      |
+| **Değişken Adı**  | **Tipi** | **Açıklama**                                                 |
+| ----------------- | -------- | ------------------------------------------------------------ |
+| tckn              | int      | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler. |
+| amount            | int      | Yüklenecek para tutarını alır veya belirler. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Üye işyeri hesabından düşülecek tutar tam olarak bu sayı olacaktır. |
 | merchantReference | string   | Satıcı referans numarasını alır veya belirler. Nakit yükleme işlemlerinde yanlış tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısasüre önce gönderilmiş ve başarılı bir merchantReference, yeni bir taleple yeniden gönderilirse, istek başarısız olur. Başarısız isteklerle gönderilen MerchantReference yeniden gönderilebilir. |
 
 ### Servis Methodu
@@ -651,7 +652,7 @@ public function createProvisionWithTckn()
   }
 ```
 
-## TCKN ile Ön Ödemesiz Para Yükleme Kontrolü
+## TCKN ile Ön Ödemesiz Para Yükleme Kontrolü 
 
 Fiziksel noktadan Papara'ya kayıtlı ulusal kimlik numarası ile kullanıcıya para yatırır. Bu işlemi gerçekleştirmek için `Cash Deposit` servisinde bulunan `createProvisionWithTcknControl` methodunu kullanın. `phoneNumber`, `tckn`, `amount` ve `merchantReference` gönderilmelidir.
 
@@ -659,24 +660,24 @@ Fiziksel noktadan Papara'ya kayıtlı ulusal kimlik numarası ile kullanıcıya 
 
 `CashDepositProvision` sınıfı `CashDeposit` servisi tarafından API'den dönen ön ödemesiz para yükleme bilgilerini eşleştirmek için kullanılır
 
-| **Değişken Adı**  | **Tip**  | **Açıklama**                                                   |
-| ----------------- | -------- | -------------------------------------------------------------- |
-| Id                | int      | Para yükleme işleminin ID'sini alır veya belirler              |
+| **Değişken Adı**  | **Tip**  | **Açıklama**                                                 |
+| ----------------- | -------- | ------------------------------------------------------------ |
+| Id                | int      | Para yükleme işleminin ID'sini alır veya belirler            |
 | CreatedAt         | DateTime | Para yükleme işleminin oluşturulma tarihini alır veya belirler |
-| Amount            | float    | Para yükleme işleminin tutarını alır veya belirler             |
-| Currency          | int      | Para yükleme işleminin para birimini alır veya belirler        |
-| MerchantReference | string   | Satıcı referans numarasın alır veya belirler                   |
-| UserFullName      | string   | Kullanıcının tam adını alır veya belirler                      |
+| Amount            | float    | Para yükleme işleminin tutarını alır veya belirler           |
+| Currency          | int      | Para yükleme işleminin para birimini alır veya belirler      |
+| MerchantReference | string   | Satıcı referans numarasın alır veya belirler                 |
+| UserFullName      | string   | Kullanıcının tam adını alır veya belirler                    |
 
 ### CashDepositTcknControlOptions
 
 `CashDepositTcknControlOptions` `Cash Deposit` servisi tarafından istek parametresi olarak kullanılır
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| phoneNumber       | string  | Kullanıcının telefon numarasını alır veya belirler. Ödemeyi alacak kullanıcının Papara'da kayıtlı cep telefonu numarasıdır. Bir ülke kodu içermeli ve + ile başlamalıdır.                                                                                                                                                                                         |
-| tckn              | int     | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler.                                                                                                                                                                                                                                                                                     |
-| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir                                                                                                                                                                            |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| phoneNumber       | string  | Kullanıcının telefon numarasını alır veya belirler. Ödemeyi alacak kullanıcının Papara'da kayıtlı cep telefonu numarasıdır. Bir ülke kodu içermeli ve + ile başlamalıdır. |
+| tckn              | int     | Nakit yükleme yapılacak kullanıcının TC kimlik numarasını alır veya belirler. |
+| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir |
 | merchantReference | string  | Satıcı referans numarasını alır veya belirler. Nakit yükleme işlemlerinde yanlış tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısasüre önce gönderilmiş ve başarılı bir merchantReference, yeni bir taleple yeniden gönderilirse, istek başarısız olur. Başarısız isteklerle gönderilen MerchantReference yeniden gönderilebilir. |
 
 ### Servis Methodu
@@ -736,7 +737,7 @@ public function createProvisionWithPhoneNumber()
 
 ## Papara Numarası ile Ön Ödemesiz Para Yükleme
 
-Fiziksel noktadan Papara numarası ile kullanıcıya ön ödemesiz olarak para yatırır. Bu işlemi yapmak için `Cash Deposit` servisinde bulunan `createProvisionWithAccountNumber` methodunu kullanın. `accountNumber`, `amount` ve `merchantReference` gönderilmelidir.
+Fiziksel noktadan Papara numarası ile kullanıcıya ön ödemesiz olarak para yatırır. Bu işlemi yapmak için  `Cash Deposit` servisinde bulunan `createProvisionWithAccountNumber` methodunu kullanın. `accountNumber`, `amount` ve `merchantReference` gönderilmelidir.
 
 ### Servis Methodu
 
@@ -766,7 +767,7 @@ public function createProvisionWithAccountNumber()
 
 ## Referans Numarasına Göre Nakit Yükleme Onaylama
 
-Kullanıcı tarafından oluşturulan referans kodu ile fiziki noktadan ön ödemesiz nakit para yükleme talebini kontrol ederek onaylanmaya hazır hale getirir. Bu işlemi gerçekleştirmek için, `Cash Deposit` servisinde bulunan `controlProvisionByReference` methodunu kullanın. `referenceCode` ve `amount` gönderilmelidir.
+Kullanıcı tarafından oluşturulan referans kodu ile fiziki noktadan ön ödemesiz nakit para yükleme talebini kontrol ederek onaylanmaya hazır hale getirir. Bu işlemi gerçekleştirmek için,  `Cash Deposit` servisinde bulunan `controlProvisionByReference` methodunu kullanın. `referenceCode` ve `amount` gönderilmelidir.
 
 ### Servis Methodu
 
@@ -816,11 +817,13 @@ public function completeProvisionByReference()
     $options->amount = 10;
     $options->referenceCode = $result->data->merchantReference;
 
-    $cashdeposit = $this->client->CashDepositService->completeProvisionByReference($options);
+    $cashdeposit = $this->client->CashDepositService->completeProvisionByReference($options); 
 
     return $result;
   }
 ```
+
+
 
 ## Nakit Yükleme İşlemini Tamamlama
 
@@ -830,9 +833,9 @@ Bekleyen para yükleme işlemlerini tamamlamak için kullanılır. Kullanıcın�
 
 `CashDepositCompleteOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı** | **Tip**  | **Açıklama**                                                          |
-| ---------------- | -------- | --------------------------------------------------------------------- |
-| id               | int      | Ön ödemesiz nakit yükleme işleminin ID'sini alır veya belirler        |
+| **Değişken Adı** | **Tip**  | **Açıklama**                                                 |
+| ---------------- | -------- | ------------------------------------------------------------ |
+| id               | int      | Ön ödemesiz nakit yükleme işleminin ID'sini alır veya belirler |
 | transactionDate  | DateTime | Ön ödemesiz nakit yükleme işleminin işlem tarihini alır veya belirler |
 
 ### Servis Methodu
@@ -867,12 +870,12 @@ Para yatırma bilgilerini tarihe göre getirir. Bu işlemi gerçekleştirmek iç
 
 `CashDepositByDateOptions` `CashDeposit` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı** | **Tip**  | **Açıklama**                                                                                                                                                                                                  |
-| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| startDate        | DateTime | Nakit para yükleme işlemlerinin başlangıç tarihini alır veya belirler.                                                                                                                                        |
-| endDate          | DateTime | Nakit para yükleme işlemlerinin bitiş tarihini alır veya belirler.                                                                                                                                            |
+| **Değişken Adı** | **Tip**  | **Açıklama**                                                 |
+| ---------------- | -------- | ------------------------------------------------------------ |
+| startDate        | DateTime | Nakit para yükleme işlemlerinin başlangıç tarihini alır veya belirler. |
+| endDate          | DateTime | Nakit para yükleme işlemlerinin bitiş tarihini alır veya belirler. |
 | pageIndex        | int      | Sayfa dizinini alır veya belirler. Bir sayfada gösterilmek istenen kayıt sayısına (pageItemCount) göre hesaplanan sayfalardan gösterilmek istenen sayfanın indeks numarasıdır. Not: ilk sayfa her zaman 1'dir |
-| pageItemCount    | int      | Sayfa öğesi sayısını alır veya belirler. Bir sayfada gösterilmesi istenen kayıtların sayısıdir.                                                                                                               |
+| pageItemCount    | int      | Sayfa öğesi sayısını alır veya belirler. Bir sayfada gösterilmesi istenen kayıtların sayısıdir. |
 
 ### Servis Methodu
 
@@ -905,7 +908,7 @@ public function getCashDepositByDate()
 
 ## Mutabakatlar
 
-Verilen tarihlerde gerçekleştirilen para yükleme işlemlerinin toplam sayısını ve hacmini döndürür. Hesaplamaya hem başlangıç hem de bitiş tarihleri dahil edilir. Bu işlemi gerçekleştirmek için, `Cash Deposit` servisinde bulunan `settlements` methodunu kullanın. `startDate` ve `endDate` gönderilmelidir
+Verilen tarihlerde gerçekleştirilen para yükleme işlemlerinin toplam sayısını ve hacmini döndürür. Hesaplamaya hem başlangıç hem de bitiş tarihleri dahil edilir. Bu işlemi gerçekleştirmek için, `Cash Deposit`  servisinde bulunan `settlements` methodunu kullanın. `startDate` ve `endDate` gönderilmelidir
 
 ### CashDepositSettlementOptions
 
@@ -947,7 +950,7 @@ public function provisionSettlements()
 
 ## Ön Ödemesiz İşlemler için Mutabakat
 
-Verilen tarihlerde gerçekleştirilen ön ödemesiz para yükleme işlemlerin toplam sayısını ve hacmini döndürür. Hesaplamaya hem başlangıç hem de bitiş tarihleri dahil edilir. Bu işlemi gerçekleştirmek için, `Cash Deposit` servisinde bulunan `provisionSettlements` methodunu kullanın. `startDate` ve `endDate` gönderilmelidir.
+Verilen tarihlerde gerçekleştirilen ön ödemesiz para yükleme işlemlerin toplam sayısını ve hacmini döndürür. Hesaplamaya hem başlangıç hem de bitiş tarihleri dahil edilir. Bu işlemi gerçekleştirmek için, `Cash Deposit`  servisinde bulunan `provisionSettlements` methodunu kullanın. `startDate` ve `endDate` gönderilmelidir.
 
 ### CashDepositSettlementOptions
 
@@ -989,20 +992,20 @@ public function provisionSettlements()
 
 ## Olası Hatalar ve Hata Kodları
 
-| **Hata Kodu** | **Hata Açıklaması**                                                                                     |
-| ------------- | ------------------------------------------------------------------------------------------------------- |
-| 100           | Kullanıcı bulunamadı.                                                                                   |
-| 101           | Satıcı bilgisi bulunamadı.                                                                              |
-| 105           | Yetersiz bakiye.                                                                                        |
-| 107           | Kullanıcı bu işlem ile toplam işlem limitini aşıyor.                                                    |
-| 111           | Kullanıcı bu işlem ile aylık toplam işlem limitini aşıyor.                                              |
-| 112           | Gönderilen tutar minimum gönderim tutarının altında.                                                    |
-| 203           | Kullanıcı hesabı blokeli.                                                                               |
+| **Hata Kodu** | **Hata Açıklaması**                                          |
+| ------------- | ------------------------------------------------------------ |
+| 100           | Kullanıcı bulunamadı.                                        |
+| 101           | Satıcı bilgisi bulunamadı.                                   |
+| 105           | Yetersiz bakiye.                                             |
+| 107           | Kullanıcı bu işlem ile toplam işlem limitini aşıyor.         |
+| 111           | Kullanıcı bu işlem ile aylık toplam işlem limitini aşıyor.   |
+| 112           | Gönderilen tutar minimum gönderim tutarının altında.         |
+| 203           | Kullanıcı hesabı blokeli.                                    |
 | 997           | Nakit para yatırma yetkisi, hesabınızda tanımlanmamıştır. Müşteri temsilcinizle iletişime geçmelisiniz. |
-| 998           | Gönderdiğiniz parametreler beklenen formatta değil. Örnek: zorunlu alanlardan biri sağlanmamıştır.      |
-| 999           | Papara sisteminde hata meydana geldi.                                                                   |
+| 998           | Gönderdiğiniz parametreler beklenen formatta değil. Örnek: zorunlu alanlardan biri sağlanmamıştır. |
+| 999           | Papara sisteminde hata meydana geldi.                        |
 
-# <a name="mass-payment">Ödeme Dağıtma</a>
+# <a name="mass-payment">Ödeme Dağıtma</a> 
 
 Bu bölüm, ödemelerini kullanıcılarına hızlı, güvenli ve yaygın bir şekilde Papara üzerinden dağıtmak isteyen işyerleri için hazırlanmış teknik entegrasyon bilgilerini içerir.
 
@@ -1014,16 +1017,16 @@ Bu bölüm, ödemelerini kullanıcılarına hızlı, güvenli ve yaygın bir şe
 
 `MassPayment` sınıfı, `MassPayment` servisi tarafından API'den dönen ödeme dağıtım bilgilerini eşleştirmek için kullanılır.
 
-| **Değişken Adı** | **Tip**  | **Açıklama**                                                                       |
-| ---------------- | -------- | ---------------------------------------------------------------------------------- |
-| massPaymentId    | string   | Ödeme ID'sini alır veya belirler.                                                  |
-| id               | int?     | Ödeme yapıldıktan sonra oluşan ID'yi alır veya belirler.                           |
-| createdAt        | DateTime | Ödeme tarihini alır veya belirler.                                                 |
-| amount           | float    | Ödeme tutarını alır veya belirler.                                                 |
+| **Değişken Adı** | **Tip**  | **Açıklama**                                                 |
+| ---------------- | -------- | ------------------------------------------------------------ |
+| massPaymentId    | string   | Ödeme ID'sini alır veya belirler.                            |
+| id               | int?     | Ödeme yapıldıktan sonra oluşan ID'yi alır veya belirler.     |
+| createdAt        | DateTime | Ödeme tarihini alır veya belirler.                           |
+| amount           | float    | Ödeme tutarını alır veya belirler.                           |
 | currency         | int?     | Ödeme yapılan para birmini alır veya belirler. Değerler "1","2" veya "3" olabilir. |
-| fee              | float    | Hizmet bedelini alır veya belirler.                                                |
-| resultingBalance | float    | Kalan bakiyeyi alır veya belirler.                                                 |
-| description      | string   | Açıklamayı alır veya belirler.                                                     |
+| fee              | float    | Hizmet bedelini alır veya belirler.                          |
+| resultingBalance | float    | Kalan bakiyeyi alır veya belirler.                           |
+| description      | string   | Açıklamayı alır veya belirler.                               |
 
 ### MassPaymentGetOptions
 
@@ -1050,7 +1053,7 @@ public function getMassPayment()
   {
     $getMassPaymentGetOptions = new MassPaymentGetOptions;
     $getMassPaymentGetOptions->id = "MASS_PAYMENT_ID";
-
+  
     $result = $this->client->MassPaymentService->getMassPayment($getMassPaymentGetOptions);
     return $result;
   }
@@ -1089,11 +1092,12 @@ public function getMassPaymentByReference()
   {
     $getMassPaymentByReferenceOptions = new MassPaymentByReferenceOptions;
     $getMassPaymentByReferenceOptions->reference = "MASS_PAYMENT_REFERENCE";
-
+  
     $result = $this->client->MassPaymentService->getMassPaymentByReference($getMassPaymentByReferenceOptions);
     return $result;
   }
 ```
+
 
 ## Hesap Numarasına Ödeme Gönderme
 
@@ -1103,14 +1107,14 @@ Papara numarasına para gönderin. Bu işlemi gerçekleştirmek için `MassPayme
 
 `MassPaymentToPaparaNumberOptions` `MassPayment` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**   | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                            |
-| ------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| accountNumber      | string  | Papara hesap numarasını alır veya belirler. Ödemeyi alacak kullanıcının 10 haneli Papara numarası. 1234567890 veya PL1234567890 biçiminde olabilir. Papara sürüm geçişinden önce Papara numarasına cüzdan numarası deniyordu, eski cüzdan numaraları Papara numarası olarak değiştirildi. Ödeme eski cüzdan numaralarına dağıtılabilir. |
-| parseAccountNumber | int?    | Ayrıştırma hesap numarasını alır veya belirler. Hesap numarasını long tip olarak ayrıştırır. Eski papara entegrasyonlarında PL ile başlanarak hesap / cüzdan numarası yapılıyordu. Hizmet, kullanıcılarından papara numarasını alan üye işyerlerine sorun yaşatmaması için PL ile başlayan numaraları kabul edecek şekilde yazılmıştır. |
-| amount             | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir.                                                                                                                                                 |
-| massPaymentId      | string  | Ödeme ID'sini alır veya belirler. Ödeme işlemlerinde hatalı tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısa süre önce gönderilmiş ve başarılı olan bir massPaymentId yeni bir taleple tekrar gönderilirse, istek başarısız olur.                                                                      |
-| turkishNationalId  | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir.                                                                                                                    |
-| description        | string  | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür.                                                                                                                                                                 |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                              |
+| ------------------ | -------- | ------------------------------------------------------------ |
+| accountNumber     | string   | Papara hesap numarasını alır veya belirler. Ödemeyi alacak kullanıcının 10 haneli Papara numarası. 1234567890 veya PL1234567890 biçiminde olabilir. Papara sürüm geçişinden önce Papara numarasına cüzdan numarası deniyordu, eski cüzdan numaraları Papara numarası olarak değiştirildi. Ödeme eski cüzdan numaralarına dağıtılabilir. |
+| parseAccountNumber | int?     | Ayrıştırma hesap numarasını alır veya belirler. Hesap numarasını long tip olarak ayrıştırır. Eski papara entegrasyonlarında PL ile başlanarak hesap / cüzdan numarası yapılıyordu. Hizmet, kullanıcılarından papara numarasını alan üye işyerlerine sorun yaşatmaması için PL ile başlayan numaraları kabul edecek şekilde yazılmıştır. |
+| amount            | float | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir. |
+| massPaymentId     | string   | Ödeme ID'sini alır veya belirler. Ödeme işlemlerinde hatalı tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısa süre önce gönderilmiş ve başarılı olan bir massPaymentId yeni bir taleple tekrar gönderilirse, istek başarısız olur. |
+| turkishNationalId | long     | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir. |
+| description       | string   | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür. |
 
 ### Servis Methodu
 
@@ -1148,13 +1152,13 @@ Papara'da kayıtlı e-posta adresine para gönderin. Bu işlemi gerçekleştirme
 
 `MassPaymentToEmailOptions` `MassPayment` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                       |
-| ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| email             | string  | Hedef e-posta adresini alır veya belirler.                                                                                                                                                                                                                         |
-| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir                                                                             |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| email             | string  | Hedef e-posta adresini alır veya belirler.                   |
+| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir |
 | massPaymentId     | string  | Ödeme ID'sini alır veya belirler. Ödeme işlemlerinde hatalı tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısa süre önce gönderilmiş ve başarılı olan bir massPaymentId yeni bir taleple tekrar gönderilirse, istek başarısız olur. |
-| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir.                                               |
-| description       | string  | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür.                                                                                            |
+| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir. |
+| description       | string  | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür. |
 
 ### Servis Methodu
 
@@ -1191,13 +1195,13 @@ Papara'da kayıtlı telefon numarasına para gönderin. Bu işlemi gerçekleşti
 
 `MassPaymentToPhoneNumberOptions` `MassPayment` servisine istek parametrelerini sağlamak için kullanılır.
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                       |
-| ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| phoneNumber       | string  | Kullanıcının telefon numarasını alır veya belirler. Ödemeyi alacak kullanıcının Papara'da kayıtlı cep telefonu numarasıdır. Bir ülke kodu içermeli ve + ile başlamalıdır.                                                                                          |
-| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir                                                                             |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| phoneNumber       | string  | Kullanıcının telefon numarasını alır veya belirler. Ödemeyi alacak kullanıcının Papara'da kayıtlı cep telefonu numarasıdır. Bir ülke kodu içermeli ve + ile başlamalıdır. |
+| amount            | float   | Miktarı alır veya belirler. Ödeme işleminin tutarıdır. Bu tutar ödemeyi alan kullanıcının hesabına aktarılacaktır. Bu rakam artı işlem ücreti üye işyeri hesabından tahsil edilecektir |
 | massPaymentId     | string  | Ödeme ID'sini alır veya belirler. Ödeme işlemlerinde hatalı tekrarları önlemek için üye işyeri tarafından gönderilen benzersiz değerdir. Kısa süre önce gönderilmiş ve başarılı olan bir massPaymentId yeni bir taleple tekrar gönderilirse, istek başarısız olur. |
-| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir.                                               |
-| description       | string  | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür.                                                                                            |
+| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir. |
+| description       | string  | Açıklamayı alır veya ayarlar. Satıcı tarafından sağlanan işlemin açıklamasıdır. Zorunlu bir alan değildir. Gönderilirse işlem açıklamalarında alıcı tarafından görülür. |
 
 ### Servis Methodu
 
@@ -1228,18 +1232,18 @@ public function createMassPaymentWithPhoneNumber()
 
 ## Olası Hatalar ve Hata Kodları
 
-| **Hata Kodu** | **Hata Açıklaması**                                                                                                                                       |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 100           | Kullanıcı bulunamadı                                                                                                                                      |
-| 105           | Yetersiz bakiye                                                                                                                                           |
-| 107           | Alıcı bakiye limitini aşıyor. Basit hesaplar için mümkün olan en yüksek bakiye 750 TL'dir.                                                                |
-| 111           | Alıcı aylık işlem limitini aşıyor. Basit hesaplar tanımlı kaynaktan aylık toplam 2000 TL ödeme alabilir.                                                  |
-| 133           | MassPaymentID yakın zamanda kullanıldı.                                                                                                                   |
-| 997           | Ödemeleri dağıtma yetkiniz yok. Müşteri temsilcinizle iletişime geçebilir ve satıcı hesabınıza bir ödeme dağıtım tanımı talep edebilirsiniz.              |
+| **Hata Kodu** | **Hata Açıklaması**                                          |
+| ------------- | ------------------------------------------------------------ |
+| 100           | Kullanıcı bulunamadı                                         |
+| 105           | Yetersiz bakiye                                              |
+| 107           | Alıcı bakiye limitini aşıyor. Basit hesaplar için mümkün olan en yüksek bakiye 750 TL'dir. |
+| 111           | Alıcı aylık işlem limitini aşıyor. Basit hesaplar tanımlı kaynaktan aylık toplam 2000 TL ödeme alabilir. |
+| 133           | MassPaymentID yakın zamanda kullanıldı.                      |
+| 997           | Ödemeleri dağıtma yetkiniz yok. Müşteri temsilcinizle iletişime geçebilir ve satıcı hesabınıza bir ödeme dağıtım tanımı talep edebilirsiniz. |
 | 998           | Gönderdiğiniz parametreler beklenen formatta değil. Örnek: Müşteri numarası 10 haneden az. Bu durumda, hata mesajı format hatasının ayrıntılarını içerir. |
-| 999           | Papara sisteminde bir hata oluştu.                                                                                                                        |
+| 999           | Papara sisteminde bir hata oluştu.                           |
 
-# <a name="payments">Ödeme Alma</a>
+# <a name="payments">Ödeme Alma</a> 
 
 Ödeme alma, oluşturma veya listeleme ve geri ödeme için ödeme hizmeti kullanılacaktır. Ödeme butonunu kullanıcılara göstermeden önce üye işyeri Papara'da bir ödeme işlemi oluşturmalıdır. Ödeme kayıtları zamana bağlıdır. Son kullanıcı tarafından tamamlanmayan ve ödenmeyen işlem kayıtları 1 saat sonra Papara sisteminden silinir. Tamamlanan ödeme kayıtları asla silinmez ve her zaman API ile sorgulanabilir.
 
@@ -1251,29 +1255,29 @@ public function createMassPaymentWithPhoneNumber()
 
 `Payment` sınıfı, `Payment` servisi tarafından API'den dönen ödeme değerlerini eşleştirmek için kullanılır.
 
-| **Değişken Adı**         | **Tip**  | **Açıklama**                                                                                                                                                                                                                                            |
-| ------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| merchant                 | Account  | Satıcıyı alır veya belirler                                                                                                                                                                                                                             |
-| id                       | string   | ID'yi alır veya belirler                                                                                                                                                                                                                                |
-| CreatedAt                | DateTime | Ödemenin oluşturulma tarihini alır veya belirler                                                                                                                                                                                                        |
-| merchantId               | string   | Satıcı ID'sini alır veya belirler                                                                                                                                                                                                                       |
-| userId                   | string   | Kullanıcı ID'sini alır veya belirler                                                                                                                                                                                                                    |
+| **Değişken Adı**         | **Tip**  | **Açıklama**                                                 |
+| ------------------------ | -------- | ------------------------------------------------------------ |
+| merchant                 | Account  | Satıcıyı alır veya belirler                                  |
+| id                       | string   | ID'yi alır veya belirler                                     |
+| CreatedAt                | DateTime | Ödemenin oluşturulma tarihini alır veya belirler             |
+| merchantId               | string   | Satıcı ID'sini alır veya belirler                            |
+| userId                   | string   | Kullanıcı ID'sini alır veya belirler                         |
 | paymentMethod            | int      | Ödeme Yöntemini alır veya belirler. <br />0 - Kullanıcı, mevcut Papara bakiyesiyle işlemi tamamladı <br />1 - Kullanıcı, işlemi daha önce tanımlanmış bir banka / kredi kartı ile tamamladı. <br />2 - Kullanıcı, mobil ödeme yoluyla işlemi tamamladı. |
-| paymentMethodDescription | string   | Ödeme yöntemi açıklamasını alır veya belirler.                                                                                                                                                                                                          |
-| referenceId              | string   | Referans numarasını alır veya belirler.                                                                                                                                                                                                                 |
-| orderDescription         | string   | Sipariş açıklamasını alır veya belirler.                                                                                                                                                                                                                |
-| status                   | int      | Ödeme durumunu alır veya belirler.<br /> 0 - Bekleniyor, ödeme henüz yapılmadı. <br />1 - Ödeme yapıldı, işlem tamamlandı. 2 - İşlemler üye işyeri tarafından iade edildi.                                                                              |
-| statusDescription        | string   | Ödeme durumu açıklamasını alır veya belirler                                                                                                                                                                                                            |
-| amount                   | float    | Ödeme tutarını alır veya belirler                                                                                                                                                                                                                       |
-| fee                      | float    | Ödeme hizmet bedelini alır veya belirler                                                                                                                                                                                                                |
-| currency                 | int      | Ödeme yapılacak para birimini alır veya belirler. Değerler “0”, “1”, “2” veya “3” olabilir.                                                                                                                                                             |
-| notificationUrl          | string   | Bildirim URL'ini alır veya belirler.                                                                                                                                                                                                                    |
-| notificationDone         | bool     | Bildirimin yapılıp yapılmadığını alır veya belirler.                                                                                                                                                                                                    |
-| redirectUrl              | string   | Yönlendirme URL'ini alır veya belirler.                                                                                                                                                                                                                 |
-| raymentUrl               | string   | Ödeme URL'ini alır veya belirler.                                                                                                                                                                                                                       |
-| merchantSecretKey        | string   | Satıcı gizli anahtarını alır veya belirler.                                                                                                                                                                                                             |
-| returningRedirectUrl     | string   | Geri dönen yönlendirme URL'ini alır veya belirler.                                                                                                                                                                                                      |
-| turkishNationalId        | long     | TC kimlik numarasını alır veya belirler.                                                                                                                                                                                                                |
+| paymentMethodDescription | string   | Ödeme yöntemi açıklamasını alır veya belirler.               |
+| referenceId              | string   | Referans numarasını alır veya belirler.                      |
+| orderDescription         | string   | Sipariş açıklamasını alır veya belirler.                     |
+| status                   | int      | Ödeme durumunu alır veya belirler.<br /> 0 - Bekleniyor, ödeme henüz yapılmadı. <br />1 - Ödeme yapıldı, işlem tamamlandı. 2 - İşlemler üye işyeri tarafından iade edildi. |
+| statusDescription        | string   | Ödeme durumu açıklamasını alır veya belirler                 |
+| amount                   | float    | Ödeme tutarını alır veya belirler                            |
+| fee                      | float    | Ödeme hizmet bedelini alır veya belirler                     |
+| currency                 | int      | Ödeme yapılacak para birimini alır veya belirler. Değerler “0”,  “1”, “2” veya  “3” olabilir. |
+| notificationUrl          | string   | Bildirim URL'ini alır veya belirler.                         |
+| notificationDone         | bool     | Bildirimin yapılıp yapılmadığını alır veya belirler.         |
+| redirectUrl              | string   | Yönlendirme URL'ini alır veya belirler.                      |
+| raymentUrl               | string   | Ödeme URL'ini alır veya belirler.                            |
+| merchantSecretKey        | string   | Satıcı gizli anahtarını alır veya belirler.                  |
+| returningRedirectUrl     | string   | Geri dönen yönlendirme URL'ini alır veya belirler.           |
+| turkishNationalId        | long     | TC kimlik numarasını alır veya belirler.                     |
 
 ### PaymentGetOptions
 
@@ -1310,13 +1314,14 @@ public function getPayment()
 
 Ödeme bilgilerini döndürür. Bu işlemi gerçekleştirmek için `Payment` servisinde bulunan `getPaymentByReference` methodunu kullanın. `referenceId` gönderilmelidir.
 
+
 ### PaymentGetByReferenceOptions
 
 `PaymentGetByReferenceOptions` ödeme bilgilerine ulaşırken parametre olarak kullanılır
 
-| **Değişken Adı** | **Tip** | **Açıklama**                                 |
-| ---------------- | ------- | -------------------------------------------- |
-| referenceId      | string  | Ödeme referans numarasını alır veya belirler |
+| **Değişken Adı** | **Tip** | **Açıklama**                |
+| ----------------- | -------- | ------------------------------ |
+| referenceId                | string   | Ödeme referans numarasını alır veya belirler |
 
 ### Servis Methodu
 
@@ -1324,8 +1329,8 @@ public function getPayment()
 
 Yetkili satıcı için ödeme ve bakiye bilgilerine erişmek istenildiğinde kullanılır.
 
-| **Method**            | **Parametreler**             | **Geri Dönüş Tipi**   |
-| --------------------- | ---------------------------- | --------------------- |
+| **Method** | **Parametreler**  | **Geri Dönüş Tipi**   |
+| ---------- | ----------------- | --------------------- |
 | getPaymentByReference | PaymentGetByReferenceOptions | PaparaResult<Payment> |
 
 #### Kullanım Şekli
@@ -1341,22 +1346,23 @@ public function getPaymentByReference()
   }
 ```
 
+
 ## Ödeme Oluşturma
 
-Yeni bir ödeme kaydı oluşturur. Bu işlemi gerçekleştirmek için `Payment` servisinde bulunan `createPayment` methodunu kullanın. `amount`, `referenceId`, `orderDescription`, `notificationUrl` ve `redirectUrl` sağlanmalıdır.
+Yeni bir ödeme kaydı oluşturur. Bu işlemi gerçekleştirmek için `Payment` servisinde bulunan `createPayment`  methodunu kullanın. `amount`, `referenceId`, `orderDescription`, `notificationUrl` ve `redirectUrl` sağlanmalıdır.
 
 ### PaymentCreateOptions
 
 `PaymentCreateOptions` ödeme oluştururken parametre olarak kullanılır
 
-| **Değişken Adı**  | **Tip** | **Açıklama**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| amount            | float   | Ödeme yapılacak miktarı alır veya belirler. Ödeme işleminin tutarı. Tam olarak bu tutar ödemeyi yapan kullanıcının hesabından alınacak ve bu tutar ödeme ekranında kullanıcıya gösterilecektir. Miktar alanı minimum 1.00, maksimum 500000.00 olabilir                                                                                                                                                                                                                                                       |
-| referenceId       | string  | Referans ID'sini alır veya belirler. Üye işyeri sistemindeki ödeme işleminin referans bilgileridir. İşlem, Papara'ya gönderildiği gibi sonuç bildirimlerinde değiştirilmeden üye işyerine iade edilecektir. 100 karakterden fazla olmamalıdır. Bu alanın benzersiz olması gerekmez ve Papara böyle bir kontrol yapmaz                                                                                                                                                                                        |
-| orderDescription  | string  | Sipariş açıklamasını alır veya belirler. Ödeme işleminin açıklamasıdır. Gönderilen bilgi, Papara ödeme sayfasında kullanıcıya gösterilecektir. Kullanıcı tarafından başlatılan işlemi doğru bir şekilde bildiren bir tanıma sahip olmak, başarılı ödeme şansını artıracaktır.                                                                                                                                                                                                                                |
-| notificationUrl   | string  | Bildirim URL'sini alır veya belirler. Ödeme bildirim isteklerinin (IPN) gönderileceği URL'dir. "NotificationUrl" ile gönderilen URL'ye Papara, ödeme tamamlandıktan hemen sonra bir HTTP POST isteği ile ödemenin tüm bilgilerini içeren bir ödeme nesnesi gönderecektir. Üye işyeri bu talebe 200 OK döndürürse tekrar bildirim yapılmayacaktır. Üye işyeri bu bildirime 200 OK dönmezse, Papara, üye işyeri 200 OK'e dönene kadar 24 saat boyunca ödeme bildirimi (IPN) talepleri yapmaya devam edecektir. |
-| redirectUrl       | string  | Yönlendirme URL'sini alır veya belirler. İşlemin sonunda kullanıcının yönlendirileceği URL                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir.                                                                                                                                                                                                                                                                                         |
+| **Değişken Adı**  | **Tip** | **Açıklama**                                                 |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| amount            | float   | Ödeme yapılacak miktarı alır veya belirler. Ödeme işleminin tutarı. Tam olarak bu tutar ödemeyi yapan kullanıcının hesabından alınacak ve bu tutar ödeme ekranında kullanıcıya gösterilecektir. Miktar alanı minimum 1.00, maksimum 500000.00 olabilir |
+| referenceId       | string  | Referans ID'sini alır veya belirler. Üye işyeri sistemindeki ödeme işleminin referans bilgileridir. İşlem, Papara'ya gönderildiği gibi sonuç bildirimlerinde değiştirilmeden üye işyerine iade edilecektir. 100 karakterden fazla olmamalıdır. Bu alanın benzersiz olması gerekmez ve Papara böyle bir kontrol yapmaz |
+| orderDescription  | string  | Sipariş açıklamasını alır veya belirler. Ödeme işleminin açıklamasıdır. Gönderilen bilgi, Papara ödeme sayfasında kullanıcıya gösterilecektir. Kullanıcı tarafından başlatılan işlemi doğru bir şekilde bildiren bir tanıma sahip olmak, başarılı ödeme şansını artıracaktır. |
+| notificationUrl   | string  | Bildirim URL'sini alır veya belirler. Ödeme bildirim isteklerinin (IPN) gönderileceği URL'dir.  "NotificationUrl" ile gönderilen URL'ye Papara, ödeme tamamlandıktan hemen sonra bir HTTP POST isteği ile ödemenin tüm bilgilerini içeren bir ödeme nesnesi gönderecektir. Üye işyeri bu talebe 200 OK döndürürse tekrar bildirim yapılmayacaktır. Üye işyeri bu bildirime 200 OK dönmezse, Papara, üye işyeri 200 OK'e dönene kadar 24 saat boyunca ödeme bildirimi (IPN) talepleri yapmaya devam edecektir. |
+| redirectUrl       | string  | Yönlendirme URL'sini alır veya belirler. İşlemin sonunda kullanıcının yönlendirileceği URL |
+| turkishNationalId | long    | TC kimlik numarasını alır veya belirler. Ödemeyi alacak kullanıcının gönderdiği kimlik bilgilerinin Papara sisteminde kontrolünü sağlar. Kimlik bilgilerinde bir çelişki olması durumunda işlem gerçekleşmeyecektir. |
 
 ### Servis Methodu
 
@@ -1388,7 +1394,7 @@ public function createPayment()
   }
 ```
 
-## İade İşlemi
+## İade İşlemi 
 
 Satıcının ödeme ID'siyle tamamlanmış bir ödemesini iade etmesini sağlar. Bu işlemi gerçekleştirmek için `Payment` servisinde bulunan `refund` yöntemini kullanın. `id` gönderilmelidir.
 
@@ -1431,37 +1437,37 @@ Satıcının tamamlanan ödemelerini sıralı bir şekilde listeler. Bu işlemi 
 
 `PaymentListOptions` sınıfı `Payment` servisi tarafından API'den dönen liste bilgilerini eşleştirmek için kullanılır
 
-| **Değişken Adı** | **Tip** | **Açıklama**                                                                                                                                                                                                  |
-| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Değişken Adı** | **Tip** | **Açıklama**                                                 |
+| ---------------- | ------- | ------------------------------------------------------------ |
 | pageIndex        | int     | Sayfa dizinini alır veya belirler. Bir sayfada gösterilmek istenen kayıt sayısına (pageItemCount) göre hesaplanan sayfalardan gösterilmek istenen sayfanın indeks numarasıdır. Not: ilk sayfa her zaman 1'dir |
-| pageItemCount    | Int     | Sayfa öğesi sayısını alır veya belirler. Bir sayfada gösterilmesi istenen kayıtların sayısıdır.                                                                                                               |
+| pageItemCount    | Int     | Sayfa öğesi sayısını alır veya belirler. Bir sayfada gösterilmesi istenen kayıtların sayısıdır. |
 
 ### PaymentListItem
 
 `PaymentListItem` is used by payment service to match returning completed payment list values list API.
 
-| **Değişken Adı**         | **Tip**  | **Açıklama**                                                                                                                                                                                                                                          |
-| ------------------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Id                       | string   | Ödeme ID'sini alır veya belirler.                                                                                                                                                                                                                     |
-| CreatedAt                | DateTime | Ödemenin yapıldığı tarihi alır veya belirler.                                                                                                                                                                                                         |
-| MerchantId               | string   | Satıcı ID'sini alır veya belirler.                                                                                                                                                                                                                    |
-| UserId                   | string   | Kullanıcı ID'sini alır veya belirler                                                                                                                                                                                                                  |
+| **Değişken Adı**         | **Tip**  | **Açıklama**                                                 |
+| ------------------------ | -------- | ------------------------------------------------------------ |
+| Id                       | string   | Ödeme ID'sini alır veya belirler.                            |
+| CreatedAt                | DateTime | Ödemenin yapıldığı tarihi alır veya belirler.                |
+| MerchantId               | string   | Satıcı ID'sini alır veya belirler.                           |
+| UserId                   | string   | Kullanıcı ID'sini alır veya belirler                         |
 | PaymentMethod            | int      | Ödeme Yöntemini alır veya belirler<br />0 - Kullanıcı, mevcut Papara bakiyesiyle işlemi tamamladı <br />1 - Kullanıcı, işlemi daha önce tanımlanmış bir banka / kredi kartı ile tamamladı. <br />2 - Kullanıcı, mobil ödeme yoluyla işlemi tamamladı. |
-| PaymentMethodDescription | string   | Ödeme açıklamasını alır veya belirler.                                                                                                                                                                                                                |
-| ReferenceId              | string   | Referans ID'yi alır veya belirler.                                                                                                                                                                                                                    |
-| OrderDescription         | string   | Sipariş açıklamasını alır veya belirler.                                                                                                                                                                                                              |
-| Status                   | int      | Ödeme durumunu alır veya belirler. <br />0 - Bekleniyor, ödeme henüz yapılmadı. <br />1 - Ödeme yapıldı, işlem tamamlandı. <br />2 - İşlemler üye işyeri tarafından iade edilir.                                                                      |
-| StatusDescription        | string   | Ödeme durum açıklamasını alır veya belirler.                                                                                                                                                                                                          |
-| Amount                   | float    | Ödeme tutarını alır veya belirler.                                                                                                                                                                                                                    |
-| Fee                      | float    | Hizmet bedelini alır veya belirler.                                                                                                                                                                                                                   |
-| Currency                 | int      | Ödemenin yapıldığı para birimini alır veya belirler. Olabilecek değerler “0”, “1”, “2” veya “3”                                                                                                                                                       |
-| NotificationUrl          | string   | Bildirim URL'ini alır veya belirler                                                                                                                                                                                                                   |
-| NotificationDone         | bool     | Bildirimin yapılıp yapılmadığını alır veya belirler                                                                                                                                                                                                   |
-| RedirectUrl              | string   | Yönlendirme URL'ini alır veya belirler                                                                                                                                                                                                                |
-| PaymentUrl               | string   | Ödeme URL'ini alır veya belirler                                                                                                                                                                                                                      |
-| MerchantSecretKey        | string   | Satıcı gizli anahtarını alır veya belirler                                                                                                                                                                                                            |
-| ReturningRedirectUrl     | string   | Geri dönüş URL'ini alır veya belirler                                                                                                                                                                                                                 |
-| TurkishNationalId        | long     | TC Kimlik numarasını alır veya belirler                                                                                                                                                                                                               |
+| PaymentMethodDescription | string   | Ödeme açıklamasını alır veya belirler.                       |
+| ReferenceId              | string   | Referans ID'yi alır veya belirler.                           |
+| OrderDescription         | string   | Sipariş açıklamasını alır veya belirler.                     |
+| Status                   | int      | Ödeme durumunu alır veya belirler. <br />0 - Bekleniyor, ödeme henüz yapılmadı. <br />1 - Ödeme yapıldı, işlem tamamlandı. <br />2 - İşlemler üye işyeri tarafından iade edilir. |
+| StatusDescription        | string   | Ödeme durum açıklamasını alır veya belirler.                 |
+| Amount                   | float    | Ödeme tutarını alır veya belirler.                           |
+| Fee                      | float    | Hizmet bedelini alır veya belirler.                          |
+| Currency                 | int      | Ödemenin yapıldığı para birimini alır veya belirler. Olabilecek değerler “0”,  “1”, “2” veya “3” |
+| NotificationUrl          | string   | Bildirim URL'ini alır veya belirler                          |
+| NotificationDone         | bool     | Bildirimin yapılıp yapılmadığını alır veya belirler          |
+| RedirectUrl              | string   | Yönlendirme URL'ini alır veya belirler                       |
+| PaymentUrl               | string   | Ödeme URL'ini alır veya belirler                             |
+| MerchantSecretKey        | string   | Satıcı gizli anahtarını alır veya belirler                   |
+| ReturningRedirectUrl     | string   | Geri dönüş URL'ini alır veya belirler                        |
+| TurkishNationalId        | long     | TC Kimlik numarasını alır veya belirler                      |
 
 ### Servis Methodu
 
@@ -1489,13 +1495,13 @@ public function list()
 
 ## Olası Hatalar ve Hata Kodları
 
-| **Hata Kodu** | **Hata Açıklaması**                                                                                |
-| ------------- | -------------------------------------------------------------------------------------------------- |
-| 997           | Ödemeleri kabul etme yetkiniz yok. Müşteri temsilcinizle iletişime geçmelisiniz.                   |
+| **Hata Kodu** | **Hata Açıklaması**                                          |
+| ------------- | ------------------------------------------------------------ |
+| 997           | Ödemeleri kabul etme yetkiniz yok. Müşteri temsilcinizle iletişime geçmelisiniz. |
 | 998           | Gönderdiğiniz parametreler beklenen formatta değil. Örnek: zorunlu alanlardan biri sağlanmamıştır. |
-| 999           | Papara sisteminde bir hata oluştu.                                                                 |
+| 999           | Papara sisteminde bir hata oluştu.                           |
 
-# <a name="validation">Doğrulama</a>
+# <a name="validation">Doğrulama</a> 
 
 Bir son kullanıcıyı doğrulamak için doğrulama servisi kullanılacaktır. Doğrulama, hesap numarası, e-posta adresi, telefon numarası, ulusal kimlik numarası ile yapılabilir.
 
@@ -1503,7 +1509,7 @@ Bir son kullanıcıyı doğrulamak için doğrulama servisi kullanılacaktır. D
 
 Papara kullanıcı ID'si ile kullanıcıları doğrulamak için kullanılır. Bu işlemi gerçekleştirmek için `Validation` servisinde bulunan `validateById`methodunu kullanın. `userId` gönderilmelidir.
 
-### Validation Model
+### Validation Model           
 
 `Validation` sınıfı, `Validation` servisi tarafından API'den dönen kullanıcı değerini eşleştirmek için kullanılır
 
@@ -1517,7 +1523,7 @@ Papara kullanıcı ID'si ile kullanıcıları doğrulamak için kullanılır. Bu
 | Tckn             | Long    | Kullanıcının TC kimlik numarasını alır veya belirler. |
 | AccountNumber    | int?    | Kullanıcının hesap numarasını alır veya belirler.     |
 
-### ValidationByIdOptions
+### ValidationByIdOptions 
 
 `ValidationByIdOptions` `Validation` servisi tarafından istek parametrelerini sağlamak için kullanılır.
 
@@ -1688,6 +1694,8 @@ public function ValidateByTckn()
   }
 ```
 
+
+
 # <a name="response-types">Geri Dönüş Tipleri</a>
 
 Bu bölüm, API'den dönüş değerleri hakkında teknik bilgiler içerir.
@@ -1696,12 +1704,12 @@ Bu bölüm, API'den dönüş değerleri hakkında teknik bilgiler içerir.
 
 Papara Single Result tipi. API'ye gönderilen ve API'den dönen nesne veri tiplerini işler.
 
-| **Değişken Adı** | **Tip**              | **Açıklama**                                                                        |
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------- |
-| data             | bool                 | Genel nesne dönüş tipi. Verilen nesne tipi değerini döndürür                        |
+| **Değişken Adı** | **Tip**              | **Açıklama**                                                 |
+| ---------------- | -------------------- | ------------------------------------------------------------ |
+| data             | bool                 | Genel nesne dönüş tipi. Verilen nesne tipi değerini döndürür |
 | succeeded        | bool                 | İşlemin başarıyla sonuçlanıp sonuçlanmadığını gösteren bir değer alır veya belirler |
-| error            | ServiceResultError   | İşlemin başarısız olup olmadığını gösteren bir değer alır veya belirler             |
-| result           | ServiceResultSuccess | Başarılı olan işlem sonucunu alır veya belirler.                                    |
+| error            | ServiceResultError   | İşlemin başarısız olup olmadığını gösteren bir değer alır veya belirler |
+| result           | ServiceResultSuccess | Başarılı olan işlem sonucunu alır veya belirler.             |
 
 ## ServiceResultError
 
@@ -1720,3 +1728,5 @@ Papara Service Success Result type. Success responses returning from API.
 | ---------------- | ------- | ------------------------------------------------ |
 | Message          | string  | Başarılı işlem sonuç mesajını alır veya belirler |
 | Code             | int     | Başarılı işlem sonuç kodunu alır veya belirler   |
+
+ 
