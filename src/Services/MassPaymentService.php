@@ -38,7 +38,7 @@ class MassPaymentService extends PaparaService
    * @param MassPaymentGetOptions $options
    * @return PaparaResult
    */
-  public function getMassPayment(MassPaymentGetOptions $options)
+  public function getMassPayment($options)
   {
     $result = $this->GetResult("/", $options);
     return new PaparaResult($result);
@@ -50,7 +50,7 @@ class MassPaymentService extends PaparaService
    * @param MassPaymentToPaparaNumberOptions $options
    * @return PaparaResult
    */
-  public function createMassPaymentWithAccountNumber(MassPaymentToPaparaNumberOptions $options)
+  public function createMassPaymentWithAccountNumber($options)
   {
     $result = $this->PostResult("/", $options);
     return new PaparaResult($result);
@@ -62,7 +62,7 @@ class MassPaymentService extends PaparaService
    * @param MassPaymentToEmailOptions $options
    * @return void
    */
-  public function createMassPaymentWithEmail(MassPaymentToEmailOptions $options)
+  public function createMassPaymentWithEmail($options)
   {
     $result = $this->PostResult("/email", $options);
     return new PaparaResult($result);
@@ -74,7 +74,7 @@ class MassPaymentService extends PaparaService
    * @param MassPaymentToPhoneNumberOptions $options
    * @return void
    */
-  public function createMassPaymentWithPhoneNumber(MassPaymentToPhoneNumberOptions $options)
+  public function createMassPaymentWithPhoneNumber($options)
   {
     $result = $this->PostResult("/phone", $options);
     return new PaparaResult($result);
@@ -86,7 +86,7 @@ class MassPaymentService extends PaparaService
    * @param MassPaymentGetOptions $options
    * @return PaparaResult
    */
-  public function getMassPaymentByReference(MassPaymentByReferenceOptions $options)
+  public function getMassPaymentByReference($options)
   {
     $result = $this->GetResult("/byreference", $options);
     return new PaparaResult($result);

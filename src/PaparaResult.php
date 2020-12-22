@@ -10,6 +10,8 @@
 
 namespace Papara;
 
+use Exception;
+
 class PaparaResult
 {
   public $data;
@@ -25,9 +27,14 @@ class PaparaResult
   private function resolve($data)
   {
     try {
-      foreach ($data as $key => $value) {
-        $this->{$key} = $value;
-      }  
+      if ($data) {
+        foreach ($data as $key => $value) {
+          $this->{$key} = $value;
+        }
+      }
+      else {
+        throw new Exception("Invalid result");
+      }
     } catch (\Throwable $th) {
     }
   }

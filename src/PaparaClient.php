@@ -19,12 +19,13 @@ use Papara\Services\ValidationService;
 
 class PaparaClient
 {
-  public AccountService $AccountService;
-  public BankingService $BankingService;
-  public CashDepositService $CashDepositService;
-  public MassPaymentService $MassPaymentService;
-  public PaymentService $PaymentService;
-  public ValidationService $ValidationService;
+  /*  */
+  public $AccountService;
+  public $BankingService;
+  public $CashDepositService;
+  public $MassPaymentService;
+  public $PaymentService;
+  public $ValidationService;
 
 
   /**

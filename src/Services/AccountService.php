@@ -50,7 +50,7 @@ class AccountService extends PaparaService
    * @param LedgerListOptions $options
    * @return PaparaResult
    */
-  public function ListLedgers(LedgerListOptions $options)
+  public function ListLedgers($options)
   {
     $result = $this->PostResult("/ledgers", $options);
     return new PaparaResult($result);
@@ -62,7 +62,7 @@ class AccountService extends PaparaService
    * @param SettlementGetOptions $options
    * @return PaparaResult
    */
-  public function GetSettlement(SettlementGetOptions $options)
+  public function GetSettlement($options)
   {
     $result = $this->PostResult("/settlement", $options);
     return new PaparaResult($result);

@@ -24,12 +24,12 @@ abstract class PaparaService
   /**
    * Service client's instance.
    */
-  private PaparaServiceClient $client;
+  private $client;
 
   /**
    * Request options' instance.
    */
-  private RequestOptions $requestOptions;
+  private $requestOptions;
 
   /**
    * Initializes a new instance of the PaparaService class.

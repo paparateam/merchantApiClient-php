@@ -43,14 +43,13 @@ class CashDepositService extends PaparaService
     $this->basePath = "/cashdeposit";
   }
 
-
   /**
    * Returns a cash deposit information.
    *
    * @param CashDepositGetOptions $options
    * @return PaparaResult
    */
-  public function getCashDeposit(CashDepositGetOptions $options)
+  public function getCashDeposit($options)
   {
     $result = $this->GetResult("/", $options);
     return new PaparaResult($result);
@@ -62,7 +61,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToPhoneOptions $options
    * @return PaparaResult
    */
-  public function createWithPhoneNumber(CashDepositToPhoneOptions $options)
+  public function createWithPhoneNumber($options)
   {
     $result = $this->PostResult("/", $options);
     return new PaparaResult($result);
@@ -74,7 +73,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToAccountNumberOptions $options
    * @return PaparaResult
    */
-  public function createWithAccountNumber(CashDepositToAccountNumberOptions $options)
+  public function createWithAccountNumber($options)
   {
     $result = $this->PostResult("/accountnumber", $options);
     return new PaparaResult($result);
@@ -86,7 +85,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToTcknOptions $options
    * @return PaparaResult
    */
-  public function createWithTckn(CashDepositToTcknOptions $options)
+  public function createWithTckn($options)
   {
     $result = $this->PostResult("/tckn", $options);
     return new PaparaResult($result);
@@ -98,7 +97,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositTcknControlOptions $options
    * @return PaparaResult
    */
-  public function createProvisionWithTcknControl(CashDepositTcknControlOptions $options)
+  public function createProvisionWithTcknControl($options)
   {
     $result = $this->PostResult("/provision/withtckncontrol", $options);
     return new PaparaResult($result);
@@ -110,7 +109,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToPhoneOptions $options
    * @return PaparaResult
    */
-  public function createProvisionWithPhoneNumber(CashDepositToPhoneOptions $options)
+  public function createProvisionWithPhoneNumber($options)
   {
     $result = $this->PostResult("/provision/phonenumber", $options);
     return new PaparaResult($result);
@@ -122,7 +121,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToAccountNumberOptions $options
    * @return PaparaResult
    */
-  public function createProvisionWithAccountNumber(CashDepositToAccountNumberOptions $options)
+  public function createProvisionWithAccountNumber($options)
   {
     $result = $this->PostResult("/provision/accountnumber", $options);
     return new PaparaResult($result);
@@ -134,7 +133,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositToTcknOptions $options
    * @return PaparaResult
    */
-  public function createProvisionWithTckn(CashDepositToTcknOptions $options)
+  public function createProvisionWithTckn($options)
   {
     $result = $this->PostResult("/provision/tckn", $options);
     return new PaparaResult($result);
@@ -146,7 +145,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositControlOptions $options
    * @return PaparaResult
    */
-  public function controlProvisionByReference(CashDepositControlOptions $options)
+  public function controlProvisionByReference($options)
   {
     $result = $this->PostResult("/provisionbyreference/control", $options);
     return new PaparaResult($result);
@@ -158,7 +157,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositControlOptions $options
    * @return PaparaResult
    */
-  public function completeProvisionByReference(CashDepositControlOptions $options)
+  public function completeProvisionByReference($options)
   {
     $result = $this->PostResult("/provisionbyreference/complete", $options);
     return new PaparaResult($result);
@@ -170,7 +169,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositControlOptions $options
    * @return PaparaResult
    */
-  public function completeProvision(CashDepositCompleteOptions $options)
+  public function completeProvision($options)
   {
     $result = $this->PostResult("/provision/complete", $options);
     return new PaparaResult($result);
@@ -182,7 +181,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositByDateOptions $options
    * @return PaparaResult
    */
-  public function getCashDepositByDate(CashDepositByDateOptions $options)
+  public function getCashDepositByDate($options)
   {
     $result = $this->GetResult("/bydate", $options);
     return new PaparaResult($result);
@@ -194,7 +193,7 @@ class CashDepositService extends PaparaService
    * @param CashDepositSettlementOptions $options
    * @return PaparaResult
    */
-  public function settlements(CashDepositSettlementOptions $options)
+  public function settlements($options)
   {
     $result = $this->PostResult("/settlement", $options);
     return new PaparaResult($result);
@@ -206,19 +205,19 @@ class CashDepositService extends PaparaService
    * @param CashDepositSettlementOptions $options
    * @return PaparaResult
    */
-  public function provisionSettlements(CashDepositSettlementOptions $options)
+  public function provisionSettlements($options)
   {
     $result = $this->PostResult("/provision/settlement", $options);
     return new PaparaResult($result);
   }
-  
+
   /**
    * Returns a cash deposit object using merchant's unique reference number.
    *
    * @param CashDepositByReferenceOptions $options
    * @return PaparaResult
    */
-  public function getByReference(CashDepositByReferenceOptions $options)
+  public function getByReference($options)
   {
     $result = $this->GetResult("/byreference", $options);
     return new PaparaResult($result);

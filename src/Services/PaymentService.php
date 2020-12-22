@@ -38,7 +38,7 @@ class PaymentService extends PaparaService
    * @param PaymentGetOptions $options
    * @return PaparaResult
    */
-  public function getPayment(PaymentGetOptions $options)
+  public function getPayment($options)
   {
     $result = $this->GetResult("/", $options);
     return new PaparaResult($result);
@@ -50,7 +50,7 @@ class PaymentService extends PaparaService
    * @param PaymentCreateOptions $options
    * @return PaparaResult
    */
-  public function createPayment(PaymentCreateOptions $options)
+  public function createPayment($options)
   {
     $result = $this->PostResult("/", $options);
     return new PaparaResult($result);
@@ -62,7 +62,7 @@ class PaymentService extends PaparaService
    * @param PaymentRefundOptions $options
    * @return PaparaResult
    */
-  public function refund(PaymentRefundOptions $options)
+  public function refund($options)
   {
     $result = $this->PutResult("/", $options);
     return new PaparaResult($result);
@@ -74,7 +74,7 @@ class PaymentService extends PaparaService
    * @param PaymentGetOptions $options
    * @return PaparaResult
    */
-  public function getPaymentByReference(PaymentGetByReferenceOptions $options)
+  public function getPaymentByReference($options)
   {
     $result = $this->GetResult("/reference", $options);
     return new PaparaResult($result);
@@ -86,7 +86,7 @@ class PaymentService extends PaparaService
    * @param PaymentListOptions $options
    * @return PaparaResult
    */
-  public function list(PaymentListOptions $options)
+  public function listPayments($options)
   {
     $result = $this->GetResult("/list", $options);
     return new PaparaResult($result);

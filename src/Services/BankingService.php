@@ -55,7 +55,7 @@ class BankingService extends PaparaService
    * @param BankingWithdrawalOptions $options
    * @return PaparaResult
    */
-  public function Withdrawal(BankingWithdrawalOptions $options)
+  public function Withdrawal($options)
   {
     $result = $this->PostResult("/withdrawal", $options);
     return new PaparaResult($result);
