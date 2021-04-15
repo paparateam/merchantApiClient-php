@@ -48,6 +48,12 @@ class MassPaymentToPaparaNumberOptions
   public $turkishNationalId;
 
   /**
+   * Gets or sets payment currency.
+   * @var int $currency
+   */
+  public $currency;
+
+  /**
    * Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.
    *
    * @var string $description

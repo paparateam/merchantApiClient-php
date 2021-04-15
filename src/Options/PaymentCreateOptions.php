@@ -51,4 +51,10 @@ class PaymentCreateOptions
    * @var int $turkishNationalId
    */
   public $turkishNationalId;
+
+  /**
+   * Gets or sets payment currency.
+   * @var int $currency
+   */
+  public $currency;
 }
