@@ -54,7 +54,7 @@ class AccountServiceTests {
 }
 ```
 
-## Composer operations
+## Composer İşlemleri
 
 ```bash
 # Install via composer
@@ -1402,6 +1402,37 @@ public function createPayment()
   }
 ```
 
+###  Ödeme Sonucunu Doğrulama 
+
+Kullanıcının işlemi başarıyla tamamlamasını takiben, **kullanıcı üye işyerine yönlendirilmeden önce**, Papara, üye işyerinin ödeme isteği ile birlikte gönderdiği `notificationUrl`'e bir **HTTP POST** isteği yapar.
+
+Yapılan isteğin `body` kısmında, ödeme isteği oluşturma dönen değerin `data` objesi ile aynı yapıda bir JSON objesi bulunacaktır. Örnek:
+
+```json
+{
+    "merchantId": "123-4564-8484",
+    "userId": "123-987-654",
+    "paymentMethod": 1,
+    "paymentMethodDescription": "Credit/Debit Card",
+    "referenceId": "Üye işyeri referans bilgisi",
+    "orderDescription": "Kullanıcının ödeme sayfasında göreceği açıklama",
+    "status": 1,
+    "statusDescription": "Completed",    
+    "amount": 99.99,
+    "fee": 1.98,
+    "currency": "TRY",
+    "notificationUrl": "https://www.papara.com/notification",
+    "notificationDone": false,
+    "redirectUrl": "https://www.papara.com/userredirect",
+    "merchantSecretKey": "Üye işyeri panelinde bulunan secret key",
+    "paymentUrl": "www.papara.com/pid?6666-5555-ABCD",
+    "returningRedirectUrl": "",
+    "id": "6666-5555-ABCD",
+    "createdAt": "2017-06-09T06:26:15.100Z",
+    "turkishNationalId": 12345678901,
+}
+```
+
 ## İade İşlemi 
 
 Üye iş yerinin ödeme ID'siyle tamamlanmış bir ödemesini iade etmesini sağlar. Bu işlemi gerçekleştirmek için `Payment` servisinde bulunan `refund` yöntemini kullanın. `id` gönderilmelidir.
@@ -1437,7 +1468,7 @@ public function refund()
   }
 ```
 
-## List Payments
+## Ödemeleri Listeleme
 
 Üye iş yerinin tamamlanan ödemelerini sıralı bir şekilde listeler. Bu işlemi gerçekleştirmek için `Payment` servisinde buluan `list` methodunu kullanın. `pageIndex`ve `pageItemCount ` gönderilmelidir.
 
@@ -1667,7 +1698,7 @@ Paparaya kayıtlı e-posta adresi ile doğrulama yapılmak istenildiğinde kulla
   }
 ```
 
-## Validate By National Identity Number
+## TC Kimlik Numarası ile Doğrulama
 
 Paparaya kayıtlı TC kimlik numarası ile kullanıcıları doğrulamak için kullanılır. Bu işlemi gerçekleştirmek için `Validation` servisinde bulunan `validateByTckn`methodunu kullanın. `tckn` gönderilmelidir.
 
