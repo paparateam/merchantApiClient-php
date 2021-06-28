@@ -14,6 +14,7 @@ require __DIR__ . '/src/Services/ApplicationService.php';
 require __DIR__ . '/src/Services/BankingService.php';
 require __DIR__ . '/src/Services/CashDepositService.php';
 require __DIR__ . '/src/Services/MassPaymentService.php';
+require __DIR__ . '/src/Services/RecurringMassPaymentService.php';
 require __DIR__ . '/src/Services/PaymentService.php';
 require __DIR__ . '/src/Services/ValidationService.php';
 
@@ -36,6 +37,9 @@ require __DIR__ . '/src/Options/MassPaymentGetOptions.php';
 require __DIR__ . '/src/Options/MassPaymentToEmailOptions.php';
 require __DIR__ . '/src/Options/MassPaymentToPaparaNumberOptions.php';
 require __DIR__ . '/src/Options/MassPaymentToPhoneNumberOptions.php';
+require __DIR__ . '/src/Options/RecurringMassPaymentToEmailOptions.php';
+require __DIR__ . '/src/Options/RecurringMassPaymentToPaparaNumberOptions.php';
+require __DIR__ . '/src/Options/RecurringMassPaymentToPhoneNumberOptions.php';
 require __DIR__ . '/src/Options/PaymentCreateOptions.php';
 require __DIR__ . '/src/Options/PaymentGetOptions.php';
 require __DIR__ . '/src/Options/PaymentListOptions.php';
