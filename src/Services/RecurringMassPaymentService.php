@@ -18,10 +18,10 @@ use Papara\Options\MassPaymentToPhoneNumberOptions;
 use Papara\PaparaResult;
 use Papara\PaparaService;
 
-class MassPaymentService extends PaparaService
+class RecurringMassPaymentService extends PaparaService
 {
   /**
-   * Initializes a new instance of the MassPaymentService class.
+   * Initializes a new instance of the RecurringMassPaymentService class.
    *
    * @param string $apiKey Merchant API Key
    * @param boolean $isTest Select whether the environment will be test or production
