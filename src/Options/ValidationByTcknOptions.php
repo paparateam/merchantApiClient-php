@@ -13,7 +13,7 @@ namespace Papara\Options;
 class ValidationByTcknOptions
 {
   /**
-   * Gets or sets national identity number.
+   * Gets or sets turkish/national identity number.
    *
    * @var int $tckn
    */
