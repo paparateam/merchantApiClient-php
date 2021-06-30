@@ -10,7 +10,7 @@
 
 namespace Papara\Options;
 
-class MassPaymentToPaparaNumberOptions
+class RecurringMassPaymentToPaparaNumberOptions
 {
   /**
    * Gets or sets Papara account number. The 10-digit Papara number of the user who will receive the payment. It can be in the format 1234567890 or PL1234567890. Before the Papara version transition, the Papara number was called the wallet number.Old wallet numbers have been changed to Papara number. Payment can be distributed to old wallet numbers.

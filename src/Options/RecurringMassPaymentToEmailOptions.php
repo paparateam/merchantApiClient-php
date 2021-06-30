@@ -10,7 +10,7 @@
 
 namespace Papara\Options;
 
-class MassPaymentToEmailOptions
+class RecurringMassPaymentToEmailOptions
 {
   /**
    * Gets or sets e-mail address. Registered email address of the user receiving the payment.

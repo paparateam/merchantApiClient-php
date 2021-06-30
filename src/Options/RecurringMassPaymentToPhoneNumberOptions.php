@@ -10,7 +10,7 @@
 
 namespace Papara\Options;
 
-class MassPaymentToPhoneNumberOptions
+class RecurringMassPaymentToPhoneNumberOptions
 {
   /**
    * Gets or sets user's phone number. The mobile number of the user who will receive the payment, registered in Papara. It should contain a country code and start with +.
