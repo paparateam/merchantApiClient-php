@@ -12,6 +12,8 @@
 
 <a href="#mass-payment">Mass Payment</a>
 
+<a href="#recurring-mass-payment">Recurring Mass Payment</a>
+
 <a href="#payments">Payments</a>
 
 <a href="#validation">Validation</a>
@@ -1391,6 +1393,143 @@ Creates a mass payment to given phone number for authorized merchant.
 | 997            | You are not authorized to distribute payments. You can contact your customer representative and request a payment distribution definition to your merchant account.              |
 | 998            | The parameters you submitted are not in the expected format. Example: Customer number less than 10 digits. In this case, the error message contains details of the format error. |
 | 999            | An error occurred in the Papara system.                                                                                                                                          |
+
+# <a name="recurring-mass-payment">Recurring Mass Payment</a>
+This section is the technical integration document prepared for the merchants who want to distribute payments to their users in a fast, secure and widespread through Papara.
+## Recurring Mass Payment Model
+`RecurringMassPayment` class is used by recurring mass payment service to match returning recurring mass payment values from API.
+| **Variable Name** | **Type** | **Description**                                                             |
+| ----------------- | -------- | --------------------------------------------------------------------------- |
+| MerchantId        | string   | Gets or sets merchant id.                                                   |
+| UserId            | string   | Gets or sets user id.                                                       |
+| Period            | int      | Gets or sets period. Values are "0" (Monthly), "1" (Weekly), "2" (Daily).   |
+| ExecutionDay      | int      | Gets or sets ...th day of period. (Weeks start with Monday).                |
+| AccountNumber     | int      | Gets or sets account number.                                                |
+| Message           | string   | Gets or sets message.                                                       |
+| Amount            | decimal  | Gets or sets amount.                                                        |
+| Currency          | Currency | Gets or sets currency.Values are “0” (TRY), “1” (USD), “2” (EUR), “3” (GBP).|
+## Create Recurring Mass Payment To Account Number
+To perform this operation use `CreateRecurringMassPaymentWithAccountNumber` method on `MassPayment` service. `AccountNumber`, `Amount`, `ExecutionDay`, `Description`  and `Period` should be provided.
+### RecurringMassPaymentToAccountNumberOptions
+`RecurringMassPaymentToAccountNumberOptions` is used by mass payment service for providing request parameters.
+| **Variable Name** | **Type** | **Description**                                                             |
+| ----------------- | -------- | --------------------------------------------------------------------------- |
+| AccountNumber     | string   | Gets or sets Papara account number. The 10-digit Papara number of the user who will receive the payment. It can be in the format 1234567890 or PL1234567890. Before the Papara version transition, the Papara number was called the wallet number.Old wallet numbers have been changed to Papara number. Payment can be distributed to old wallet numbers.                                                                                                     |
+| Amount            | decimal  | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account.                                                |
+| TurkishNationalId | long?    | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place.                                   |
+| Currency          | Currency? | Gets or sets currency.Values are “0” (TRY), “1” (USD), “2” (EUR), “3” (GBP).|
+| Period            | int      | Gets or sets period. Values are "0" (Monthly), "1" (Weekly), "2" (Daily).   |
+| ExecutionDay      | int      | Gets or sets ...th day of period. (Weeks start with Monday).                |
+| Description       | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.                                                                                                |
+### Service Method
+#### Purpose
+Creates a recurring mass payment to given account number for authorized merchant.
+| **Method**      | **Params**                       | **Return Type**                 |
+| --------------- | -------------------------------- | ------------------------------- |
+| createRecurringMassPaymentWithAccountNumber | RecurringMassPaymentToPaparaNumberOptions | PaparaResult |
+#### Usage
+```php
+  public function createRecurringMassPaymentWithAccountNumber()
+  {
+    $recurringMassPaymentToPaparaNumberOptions = new RecurringMassPaymentToPaparaNumberOptions;
+    $recurringMassPaymentToPaparaNumberOptions->accountNumber= $this->config['PersonalAccountNumber'];
+    $recurringMassPaymentToPaparaNumberOptions->amount= 1;
+    $recurringMassPaymentToPaparaNumberOptions->description= 'Php Unit Test: RecurringMassPaymentToPaparaNumber';
+    $recurringMassPaymentToPaparaNumberOptions->parseAccountNumber= 1;
+    $recurringMassPaymentToPaparaNumberOptions->turkishNationalId= $this->config['TCKN'];
+    $recurringMassPaymentToPaparaNumberOptions->period= 0;
+    $recurringMassPaymentToPaparaNumberOptions->executionDay= 1;
+    $recurringMassPaymentToPaparaNumberOptions->currency= 0;
+
+    $result = $this->client->RecurringMassPaymentService->createRecurringMassPaymentWithAccountNumber($recurringMassPaymentToPaparaNumberOptions);
+    return $result;
+  }
+```
+## Create Recurring Mass Payment To Email
+To perform this operation use `CreateRecurringMassPaymentWithEmail` method on `MassPayment` service. `Email`, `Amount`, `TurkishNationalId`, `Period`, `Currency`, `ExecutionDay` and `Description` should be provided.
+### RecurringMassPaymentToEmailOptions
+`RecurringMassPaymentToEmailOptions` is used by mass payment service for providing request parameters.
+| **Variable Name** | **Type** | **Description**                                                             |
+| ----------------- | -------- | --------------------------------------------------------------------------- |
+| Email             | string   | Gets or sets e-mail address. Registered email address of the user receiving the payment.                                                                                                     |
+| Amount            | decimal  | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account.                                                |
+| TurkishNationalId | long?    | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place.                                   |
+| Currency          | Currency | Gets or sets currency.Values are “0” (TRY), “1” (USD), “2” (EUR), “3” (GBP).|
+| Period            | int      | Gets or sets period. Values are "0" (Monthly), "1" (Weekly), "2" (Daily).   |
+| ExecutionDay      | int      | Gets or sets ...th day of period. (Weeks start with Monday).                |
+| Description       | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.    
+### Service Method
+#### Purpose
+Creates a recurring mass payment to given email address for authorized merchant.
+| **Method**      | **Params**                       | **Return Type**                 |
+| --------------- | -------------------------------- | ------------------------------- |
+| createRecurringMassPaymentWithEmail | RecurringMassPaymentToEmailOptions | PaparaResult |
+#### Usage
+```php
+public function createRecurringMassPaymentWithEmail()
+  {
+    $recurrinMassPaymentToEmailOptions = new RecurringMassPaymentToEmailOptions;
+    $recurrinMassPaymentToEmailOptions->amount = 1;
+    $recurrinMassPaymentToEmailOptions->description = 'Php Unit Test: RecurringMassPaymentToEmail';
+    $recurrinMassPaymentToEmailOptions->massPaymentId = uniqid();
+    $recurrinMassPaymentToEmailOptions->email = $this->config['PersonalEmail'];
+    $recurrinMassPaymentToEmailOptions->turkishNationalId = $this->config['TCKN'];
+    $recurrinMassPaymentToEmailOptions->period= 0;
+    $recurrinMassPaymentToEmailOptions->executionDay= 1;
+    $recurrinMassPaymentToEmailOptions->currency= 0;
+
+    $result = $this->client->RecurringMassPaymentService->createRecurringMassPaymentWithEmail($recurrinMassPaymentToEmailOptions);
+    return $result;
+  }
+```
+## Create Recurring Mass Payment To Phone Number
+To perform this operation use `CreateRecurringMassPaymentWithPhoneNumber` method on `MassPayment` service. `PhoneNumber`, `Amount`, `TurkishNationalId`, `Period`, `Currency`, `ExecutionDay` and `Description` should be provided.
+### RecurringMassPaymentToPhoneNumberOptions
+`RecurringMassPaymentToPhoneNumberOptions` is used by mass payment service for providing request parameters.
+| **Variable Name** | **Type** | **Description**                                                             |
+| ----------------- | -------- | --------------------------------------------------------------------------- |
+| PhoneNumber       | string   | Gets or sets user's phone number. The mobile number of the user who will receive the payment, registered in Papara. It should contain a country code and start with +                                                                                        |
+| Amount            | decimal  | Gets or sets amount. The amount of the payment transaction. This amount will be transferred to the account of the user who received the payment. This figure plus transaction fee will be charged to the merchant account.                                                |
+| TurkishNationalId | long?    | Gets or sets national identity number.It provides the control of the identity information sent by the user who will receive the payment, in the Papara system. In case of a conflict of credentials, the transaction will not take place.                                   |
+| Currency          | Currency | Gets or sets currency.Values are “0” (TRY), “1” (USD), “2” (EUR), “3” (GBP).|
+| Period            | int      | Gets or sets period. Values are "0" (Monthly), "1" (Weekly), "2" (Daily).   |
+| ExecutionDay      | int      | Gets or sets ...th day of period. (Weeks start with Monday).                |
+| Description       | string   | Gets or sets description. Description of the transaction provided by the merchant. It is not a required field. If sent, the customer sees in the transaction descriptions.    
+### Service Method
+#### Purpose
+Creates a recurring mass payment to given phone number for authorized merchant.
+| **Method**      | **Params**                       | **Return Type**                 |
+| --------------- | -------------------------------- | ------------------------------- |
+| createRecurringMassPaymentWithPhoneNumber | RecurringMassPaymentToPhoneNumberOptions | PaparaResult |
+#### Usage
+```php
+public function createRecurringMassPaymentWithPhoneNumber()
+  {
+    $recurringMassPaymentToPhoneNumberOptions = new RecurringMassPaymentToPhoneNumberOptions;
+    $recurringMassPaymentToPhoneNumberOptions->amount = 1;
+    $recurringMassPaymentToPhoneNumberOptions->description = 'Php Unit Test: RecurringMassPaymentToEmail';
+    $recurringMassPaymentToPhoneNumberOptions->massPaymentId = uniqid();
+    $recurringMassPaymentToPhoneNumberOptions->phoneNumber = $this->config['PersonalPhoneNumber'];
+    $recurringMassPaymentToPhoneNumberOptions->turkishNationalId = $this->config['TCKN'];
+    $recurringMassPaymentToPhoneNumberOptions->period= 0;
+    $recurringMassPaymentToPhoneNumberOptions->executionDay= 1;
+    $recurringMassPaymentToPhoneNumberOptions->currency= 0;
+
+    $result = $this->client->RecurringMassPaymentService->createRecurringMassPaymentWithPhoneNumber($recurringMassPaymentToPhoneNumberOptions);
+    return $result;
+  }
+```
+## Possible Errors and Error Codes
+| **Error Code** | **Error Description**                                        |
+| -------------- | ------------------------------------------------------------ |
+| 100            | User not found.                                              |
+| 105            | Insufficient  funds                                          |
+| 107            | Receiver exceeds balance limit. The highest possible balance for simple accounts is  750 TL. |
+| 111            | Receiver exceeds monthly transaction limit. Simple accounts can receive payments from a total of 2000 TL of defined resources per month. |
+| 133            | MassPaymentID was used recently.                             |
+| 997            | You  are not authorized to distribute payments. You can contact your customer representative and request a payment distribution definition to your merchant  account. |
+| 998            | The  parameters you submitted are not in the expected format. Example: Customer number less than 10 digits. In this case, the error message contains details of the format error. |
+| 999            | An error  occurred in the Papara system.                     |
 
 # <a name="payments">Payments</a>
 
