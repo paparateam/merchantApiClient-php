@@ -1,20 +1,18 @@
 <?php
 
 /**
- * Mass payment service will be used for getting mass payment info and sending payments to account number, mail address and phone number.
+ * Recurring Mass payment service will be used for getting mass payment info and sending payments to account number, mail address and phone number.
  * 
- * @author Burak Serpici <burak.serpici@crosstech.com.tr>
+ * @author Mehmet Canhoroz <m.canhoroz@papara.com>
  * @version 0.0.1
  * @since 0.0.1
  */
 
 namespace Papara\Services;
 
-use Papara\Options\MassPaymentByReferenceOptions;
-use Papara\Options\MassPaymentGetOptions;
-use Papara\Options\MassPaymentToEmailOptions;
-use Papara\Options\MassPaymentToPaparaNumberOptions;
-use Papara\Options\MassPaymentToPhoneNumberOptions;
+use Papara\Options\RecurringMassPaymentToEmailOptions;
+use Papara\Options\RecurringMassPaymentToPaparaNumberOptions;
+use Papara\Options\RecurringMassPaymentToPhoneNumberOptions;
 use Papara\PaparaResult;
 use Papara\PaparaService;
 
