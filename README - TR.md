@@ -1535,6 +1535,7 @@ public function createPayment()
     $paymentCreateOptions->redirectUrl = "https://testmerchant.com/userredirect";
     $paymentCreateOptions->referenceId = $referenceId;
     $paymentCreateOptions->turkishNationalId = $this->config["TCKN"];
+    $paymentCreateOptions->currency = 0;
 
     $result = $this->client->PaymentService->createPayment($paymentCreateOptions);
     return $result;
