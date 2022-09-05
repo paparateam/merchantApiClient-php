@@ -8,6 +8,8 @@
  * @since 0.0.1
  */
 
+namespace Papara\Options;
+
 class PaymentCreateOptions
 {
   /**
